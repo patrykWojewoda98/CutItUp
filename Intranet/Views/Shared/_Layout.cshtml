@@ -6,34 +6,100 @@
     <title>@ViewData["Title"] - Intranet</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/logo.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/sidebar.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/navbar.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Intranet.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+    <script src=@("https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js")></script>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar bg-body-tertiary fixed-top">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Intranet</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/logo.png" class="logo" alt="Logo" />
+                </a>
+
+                <form class="d-flex mt-3" role="form">
+                    <i class="bi bi-key-fill mt-2 me-2"></i>
+                    <input class="form-control me-2" type="text" placeholder="Nazwa użytkownika" aria-label="Login">
+                    <input class="form-control me-2" type="password" placeholder="Hasło" aria-label="Hasło">
+                    <button class="btn btn-secondary" type="submit">Zaloguj</button>
+                </form>
+            </div>
+
+        </nav>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/logo.png" class="logo" alt="Logo" />
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        <li class="nav-item ">
+                            <a class="nav-link text-dark nav-btn" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <li class="nav-item ">
+                            <a class="nav-link text-dark nav-btn" asp-area="" asp-controller="Home" asp-action="Privacy">Dodaj nowy</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link text-dark nav-btn" asp-area="" asp-controller="Home" asp-action="Privacy">Magazyn</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link text-dark nav-btn" asp-area="" asp-controller="Home" asp-action="Privacy">Do zamówienia</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link text-dark nav-btn" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
                 </div>
             </div>
+
         </nav>
+
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-1 bg-light sidebar pt-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark nav-btn" asp-area="" asp-controller="Home" asp-action="Index"><i class="bi bi-house-door-fill"> Strona głowna</i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark nav-btn" asp-controller="Home" asp-action="Privacy"><i class="bi bi-plus-circle-fill"> Dodaj nowy</i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark nav-btn" asp-controller="Home" asp-action="Privacy"><i class="bi bi-box-seam-fill"> Magazyn</i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark nav-btn" asp-controller="Home" asp-action="Privacy"><i class="bi bi-bag-plus-fill"> Zamów</i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark nav-btn" asp-controller="Home" asp-action="Privacy"><i class="bi bi-exclamation-diamond-fill"> Braki</i></a>
+                    </li>
+                </ul>
+            </nav>
+
+            <main class="col-10 pt-3">
+                @RenderBody()
+            </main>
+            
+            <div class="d-flex justify-content-center">
+                <div class="border rounded"
+                     data-coreui-locale="en-US"
+                     data-coreui-selection-type="week"
+                     data-coreui-show-week-number="true"
+                     data-coreui-start-date="2024W15"
+                     data-coreui-toggle="calendar"></div>
+            </div>
+        </div>
     </div>
 
     <footer class="border-top footer text-muted">

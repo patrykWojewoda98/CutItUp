@@ -1,0 +1,18 @@
+﻿nav {
+    background-color: #FAF8F5;
+}
+
+.nav-btn {
+    background-color: #FAF8F5;
+    border: 10px;
+    color: #258cfb;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+    .nav-btn:hover {
+        background-color: #9a8f88;
+        font-weight: bold;
+        color: #FAF8F5 !important;
+    }
