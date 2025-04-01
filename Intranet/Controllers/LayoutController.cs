@@ -52,9 +52,9 @@ namespace Intranet.Controllers
                         var data = JsonConvert.DeserializeObject<ResponseFromGPTModel>(responseString);
                         if (data.choices[0] != null)
                         {
-                            MessageModel.messages.Add(new MessageModel { Message = data.choices[0].message.ToString(), IsUsersMessage = false });
+                            MessageModel.messages.Add(new MessageModel { Message = data.choices[0].message.content, IsUsersMessage = false });
                         }
-                        MessageModel.messages.Add(new MessageModel { Message = data.choices[0].message.content, IsUsersMessage = false });
+                        
                         
                     }
                     else

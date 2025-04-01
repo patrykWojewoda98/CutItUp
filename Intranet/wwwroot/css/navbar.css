@@ -13,7 +13,7 @@
     text-align: left;
     background-color: #f8f9fa;
     position: relative;
-    min-height: 100%;
+    min-height: auto;
 }
 
 input:focus {
@@ -21,3 +21,47 @@ input:focus {
     box-shadow: 0 0 0 0.2rem rgba(154, 143, 136, 0.25) !important;
     outline: none;
 }
+
+.navbar {
+    height: 10vh;
+}
+
+.navbar-toggler {
+    background-color: #343a40; /* ciemne tło */
+    border: 2px solid #fff; /* jasna obwódka */
+    border-radius: 5px;
+    padding: 0.5rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+.navbar-toggler:hover {
+    background-color: #495057;
+    border-color: #ccc;
+}
+
+.profile {
+    display: flex;
+    justify-content: flex-end; /* ustawia zawartość po prawej stronie */
+    align-items: center; /* wyrównanie w pionie */
+    transform: translateY(-10%); /* lekko powyżej środka */
+    gap: 10px; /* odstęp między tekstem a obrazkiem */
+    padding: 10px;
+}
+
+.profile-pic {
+    width: 7vh; /* możesz dostosować */
+    height: 7vh;
+    object-fit: cover; /* przycina obraz do okręgu */
+    border-radius: 50%; /* okrągły kształt */
+    border: 3px solid #ffffff; /* biała obwódka */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* cień */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .profile-pic:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+    }
