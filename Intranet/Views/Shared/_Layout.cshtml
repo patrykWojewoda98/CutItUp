@@ -22,28 +22,20 @@
     <header>
         <nav class="navbar bg-body-tertiary fixed-top">
             <div class="container-fluid d-flex justify-content-between align-items-center">
-                <!-- Logo po lewej -->
                 <a class="navbar-brand d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
                     <img src="~/images/logo.png" class="logo me-2" alt="Logo" />
                 </a>
-
-                <!-- Prawa część: hamburger + profil -->
                 <div class="d-flex align-items-center gap-3">
-                    <!-- Profil użytkownika -->
                     <div class="profile d-flex align-items-center">
                         <h5 class="mb-0 me-2 d-none d-md-block">Patryk Wojewoda</h5>
                         <img src="~/images/Logo.png" class="profile-pic" alt="Profil" />
                     </div>
-
-                    <!-- Hamburger -->
                     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
                             data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"
                             aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                 </div>
-
-                <!-- Offcanvas menu -->
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                     <div class="offcanvas-header">
                         <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Witaj Patryk Wojewoda</h5>
@@ -73,7 +65,6 @@
 
     <div class="container-fluid main-content main-content">
         <div class="row">
-            <!-- Sidebar -->
             <nav class="col-1 bg-light sidebar pt-3">
                 <ul class="nav flex-column">
                     <li class="nav-item">

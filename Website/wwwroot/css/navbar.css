@@ -46,7 +46,7 @@ input:focus {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    transform: translateY(-10%);
+    transform: translateY(-10%); 
     gap: 10px;
     padding: 10px;
 }
@@ -56,8 +56,8 @@ input:focus {
     height: 7vh;
     object-fit: cover;
     border-radius: 50%;
-    border: 3px solid #ffffff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border: 3px solid #ffffff; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); 
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -65,3 +65,37 @@ input:focus {
         transform: scale(1.05);
         box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
     }
+
+nav {
+    background-color: #FAF8F5;
+    height: 90vh;
+}
+
+.nav-btn {
+    background-color: #FAF8F5;
+    border: 10px;
+    color: #258cfb;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+    .nav-btn:hover {
+        background-color: #9a8f88;
+        font-weight: bold;
+        color: #FAF8F5 !important;
+    }
+
+.cart-pic {
+    font-size: 2vh;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    color: #212529;
+    display: inline-block;
+    margin-right: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 20%;
+}
+.cart-pic:hover {
+    transform: scale(1.2);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+}
