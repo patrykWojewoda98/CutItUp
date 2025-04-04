@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace Website.Models.CMS
+namespace Website.Models.Abstractions
 {
-    public class SpecialTools
+    public abstract class Tool
     {
         [Key]
         public int Id { get; set; }
@@ -12,8 +12,6 @@ namespace Website.Models.CMS
         public string Name { get; set; }
         [Required]
         public string Description { get; set; } = string.Empty;
-        [Required]
-        public int NoCuttingEddges { get; set; }
 
         [Required]
         [Column(TypeName = "decimal(10,2)")]
@@ -22,7 +20,11 @@ namespace Website.Models.CMS
         public float Dimension { get; set; }
         [Required]
         public string Material { get; set; } = string.Empty;
-        public float? Angle { get; set; }
-        public float? Radius { get; set; }
+        [Required]
+        public float Length { get; set; }
+        [Required]
+        public int NoOfToolsInMagazine { get; set; }
+        public string? ImageUrl { get; set; } = string.Empty;
+
     }
 }
