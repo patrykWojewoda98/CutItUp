@@ -1,8 +1,7 @@
 ﻿footer {
-    background-color: #333;
+    background-color: var(--secondary-color);
     text-align: center;
     padding: 10px;
-    position: fixed;
 }
 
 a {
@@ -25,7 +24,7 @@ a {
 .footer-pic {
     font-size: 2vh;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    color: #e5dddd;
+    color: var(--secondary-icon-color);
     display: inline-block;
     margin-right: 0.5rem;
     padding: 0.5rem;

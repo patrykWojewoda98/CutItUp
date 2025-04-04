@@ -1,20 +1,122 @@
-﻿h1 {
-    font-size: 4rem;
-    font-weight: 700;
-    text-align:center;
-    margin-top: 2%;
+﻿* {
+    margin: 0;
+    padding: 0;
 }
 container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    height: auto;
+    min-height: 100vh;
 }
 
-.video {
-    width: 100%;
-    height: auto;
-    margin-top: 2%;
-    
+.btn {
+    background-color: var(--primary-buttons-color);
+    font-size: 1.5rem;
 }
+
+    .btn:hover {
+        background-color: var(--primary-buttons-hover-color);
+        color: var(--secondary-text-color);
+    }
+    .btn:active {
+        background-color: var(--primary-buttons-hover-color);
+        transform: scale(0.98);
+        box-shadow: inset 0 2px 4px var(--shadow-color);
+        color: var(--secondary-text-color);
+    }
+
+@keyframes slideFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+video {
+    width: 60vw;
+    height: 80vh;
+    border-radius: 10px;
+    margin-right: 3vw;
+}
+.video-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: auto;
+}
+
+.text-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 3vw;
+}
+
+h1 {
+    color: var(--primary-text-color);
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    animation: slideFadeIn 1.2s ease-out;
+}
+h2 {
+    color: var(--primary-text-color);
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    animation: slideFadeIn 1.2s ease-out;
+}
+
+h4 {
+    animation: slideFadeIn 2.4s ease-out;
+}
+.nav-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem; 
+    margin-top: 20px; 
+}
+
+.carusel {
+    max-width: 800px;
+    margin: 40px auto;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px var(--shadow-color); 
+}
+
+.carousel-inner img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover; 
+    object-position: center;
+}
+
+.carousel-caption {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    padding: 10px 20px;
+}
+
+    .carousel-caption h5, .carousel-caption p {
+        color: var(--secondary-text-color);
+    }
+
+.map-responsive {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+}
+
+    .map-responsive iframe {
+        max-width: 100%;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px var(--shadow-color);
+    }

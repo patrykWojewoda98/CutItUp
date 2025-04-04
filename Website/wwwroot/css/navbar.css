@@ -1,89 +1,35 @@
-﻿form {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-size: 14px;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #212529;
-    text-align: left;
-    background-color: #f8f9fa;
-    position: relative;
-    min-height: auto;
-}
-
-input:focus {
-    border-color: #9A8F88 !important;
-    box-shadow: 0 0 0 0.2rem rgba(154, 143, 136, 0.25) !important;
-    outline: none;
-}
-
-.navbar {
+﻿.navbar {
     height: 10vh;
+    background-color: var(--primary-color);
 }
 
 .navbar-toggler {
-    background-color: #343a40;
     border: 2px solid #fff;
     border-radius: 5px;
     padding: 0.5rem;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    box-shadow: 0 2px 6px var(--shadow-color);
 }
 
 .navbar-toggler-icon {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
 .navbar-toggler:hover {
-    background-color: #495057;
-    border-color: #ccc;
+    background-color: var(--primary-hover-color);
 }
 
-.profile {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    transform: translateY(-10%); 
-    gap: 10px;
-    padding: 10px;
-}
 
-.profile-pic {
-    width: 7vh;
-    height: 7vh;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 3px solid #ffffff; 
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); 
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-    .profile-pic:hover {
-        transform: scale(1.05);
-        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
-    }
-
-nav {
-    background-color: #FAF8F5;
-    height: 90vh;
-}
 
 .nav-btn {
-    background-color: #FAF8F5;
     border: 10px;
-    color: #258cfb;
-    cursor: pointer;
+    color: var(--primary-text-color);
     font-weight: bold;
     border-radius: 5px;
 }
 
     .nav-btn:hover {
-        background-color: #9a8f88;
+        background-color: var(--primary-hover-bacground-color);
         font-weight: bold;
-        color: #FAF8F5 !important;
+        color: var(--secondary-text-color) !important;
     }
 
 .cart-pic {
@@ -95,7 +41,7 @@ nav {
     padding: 0.5rem;
     border-radius: 20%;
 }
-.cart-pic:hover {
-    transform: scale(1.2);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
-}
+    .cart-pic:hover {
+        transform: scale(1.2);
+        box-shadow: 0 6px 18px var(--shadow-color);
+    }

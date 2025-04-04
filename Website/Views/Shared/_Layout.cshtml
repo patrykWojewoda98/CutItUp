@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/colors.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Website.styles.css" asp-append-version="true" />
@@ -12,6 +13,8 @@
     <link rel="stylesheet" href="~/css/logo.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/navbar.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/footer.css" asp-append-version="true" />
+    @RenderSection("Styles", required: false) <!-- TO DODAJ -->
+
 </head>
 <body>
     <header>
@@ -63,20 +66,20 @@
             </div>
         </nav>
     </header>
-    <div class="container-fluid main-content">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+
+    <main role="main" class="px-0">
+        @RenderBody()
+    </main>
+
 
     <footer class="border-top footer text-muted">
         <div class="container">
-           <div class="row">
-               <h1>Chcesz sie dowiedzieć wiecej o mnie?</h1>
-               <h3>Zajżyj na moje social media!</h3>
-           </div>
-           <div class="row">
-               <div class="col-3"></div>
+            <div class="row">
+                <h1>Chcesz sie dowiedzieć wiecej o mnie?</h1>
+                <h3>Zajżyj na moje social media!</h3>
+            </div>
+            <div class="row">
+                <div class="col-3"></div>
                 <div class="col-6 justify-content-center">
                     <a href="https://www.facebook.com/patryk.wojewoda.77/" target="_blank">
                         <i class="bi bi-facebook footer-pic"></i>
@@ -96,7 +99,7 @@
 
                 </div>
                 <div class="col-3"></div>
-           </div>
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
