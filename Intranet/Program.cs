@@ -1,8 +1,14 @@
+using CutItUp.Data.Context;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
+builder.Services.AddDbContext<CutItUpContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DbContext") ?? throw new InvalidOperationException("Connection string 'DbContext' not found.")));
 
 var app = builder.Build();
 

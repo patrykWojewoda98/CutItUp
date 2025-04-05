@@ -1,16 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CutItUp.Data.Context;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Website.Data;
+
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<WebsiteContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("WebsiteContext") ?? throw new InvalidOperationException("Connection string 'WebsiteContext' not found.")));
+builder.Services.AddDbContext<CutItUpContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DbContext") ?? throw new InvalidOperationException("Connection string 'DbContext' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-//connetion to database
-builder.Services.AddDbContext<WebsiteContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("WebsiteContext") ?? throw new InvalidOperationException("Connection string 'WebsiteContext' not found.")));
 
 var app = builder.Build();
 

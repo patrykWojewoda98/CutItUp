@@ -2,10 +2,10 @@
 
 #nullable disable
 
-namespace Website.Migrations
+namespace CutItUp.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class AddDrillMillTabAndSpecialToolTable : Migration
+    public partial class CMS : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,13 +16,16 @@ namespace Website.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Angle = table.Column<float>(type: "real", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Angle = table.Column<float>(type: "real", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
-                    Length = table.Column<float>(type: "real", nullable: false),
                     Dimension = table.Column<float>(type: "real", nullable: false),
-                    Material = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Material = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Length = table.Column<float>(type: "real", nullable: false),
+                    NoOfToolsInMagazine = table.Column<int>(type: "int", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NoOfSaled = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -35,12 +38,16 @@ namespace Website.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    NoCuttingEddges = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NoCuttingEddges = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
                     Dimension = table.Column<float>(type: "real", nullable: false),
-                    Material = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Material = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Length = table.Column<float>(type: "real", nullable: false),
+                    NoOfToolsInMagazine = table.Column<int>(type: "int", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NoOfSaled = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -53,14 +60,18 @@ namespace Website.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    NoCuttingEddges = table.Column<int>(type: "int", nullable: false),
+                    Angle = table.Column<float>(type: "real", nullable: true),
+                    Radius = table.Column<float>(type: "real", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NoCuttingEddges = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
                     Dimension = table.Column<float>(type: "real", nullable: false),
                     Material = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Angle = table.Column<float>(type: "real", nullable: true),
-                    Radius = table.Column<float>(type: "real", nullable: true)
+                    Length = table.Column<float>(type: "real", nullable: false),
+                    NoOfToolsInMagazine = table.Column<int>(type: "int", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NoOfSaled = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -73,13 +84,16 @@ namespace Website.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    PassThrough = table.Column<bool>(type: "bit", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
-                    Length = table.Column<float>(type: "real", nullable: false),
                     Dimension = table.Column<float>(type: "real", nullable: false),
                     Material = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PassThrough = table.Column<bool>(type: "bit", nullable: false)
+                    Length = table.Column<float>(type: "real", nullable: false),
+                    NoOfToolsInMagazine = table.Column<int>(type: "int", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NoOfSaled = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

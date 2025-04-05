@@ -2,19 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CutItUp.Data.Context;
+using CutItUp.Data.Data.Tools;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Website.Data;
-using Website.Models.CMS;
+
 
 namespace Website.Controllers
 {
     public class SpecialToolController : Controller
     {
-        private readonly WebsiteContext _context;
+        private readonly CutItUpContext _context;
 
-        public SpecialToolController(WebsiteContext context)
+        public SpecialToolController(CutItUpContext context)
         {
             _context = context;
         }
@@ -22,7 +23,7 @@ namespace Website.Controllers
         // GET: SpecialTool
         public async Task<IActionResult> Index()
         {
-            return View(await _context.SpecialTools.ToListAsync());
+            return View(await _context.SpecialTool.ToListAsync());
         }
 
         // GET: SpecialTool/Details/5
@@ -33,7 +34,7 @@ namespace Website.Controllers
                 return NotFound();
             }
 
-            var specialTools = await _context.SpecialTools
+            var specialTools = await _context.SpecialTool
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (specialTools == null)
             {
@@ -54,7 +55,7 @@ namespace Website.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,NoCuttingEddges,Price,Dimension,Material,Angle,Radius")] SpecialTools specialTools)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,NoCuttingEddges,Price,Dimension,Material,Angle,Radius")] SpecialTool specialTools)
         {
             if (ModelState.IsValid)
             {
@@ -73,7 +74,7 @@ namespace Website.Controllers
                 return NotFound();
             }
 
-            var specialTools = await _context.SpecialTools.FindAsync(id);
+            var specialTools = await _context.SpecialTool.FindAsync(id);
             if (specialTools == null)
             {
                 return NotFound();
@@ -86,7 +87,7 @@ namespace Website.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,NoCuttingEddges,Price,Dimension,Material,Angle,Radius")] SpecialTools specialTools)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,NoCuttingEddges,Price,Dimension,Material,Angle,Radius")] SpecialTool specialTools)
         {
             if (id != specialTools.Id)
             {
@@ -124,7 +125,7 @@ namespace Website.Controllers
                 return NotFound();
             }
 
-            var specialTools = await _context.SpecialTools
+            var specialTools = await _context.SpecialTool   
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (specialTools == null)
             {
@@ -139,10 +140,10 @@ namespace Website.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var specialTools = await _context.SpecialTools.FindAsync(id);
+            var specialTools = await _context.SpecialTool.FindAsync(id);
             if (specialTools != null)
             {
-                _context.SpecialTools.Remove(specialTools);
+                _context.SpecialTool.Remove(specialTools);
             }
 
             await _context.SaveChangesAsync();
@@ -151,7 +152,7 @@ namespace Website.Controllers
 
         private bool SpecialToolsExists(int id)
         {
-            return _context.SpecialTools.Any(e => e.Id == id);
+            return _context.SpecialTool.Any(e => e.Id == id);
         }
     }
 }

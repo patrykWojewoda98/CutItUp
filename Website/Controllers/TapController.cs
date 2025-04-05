@@ -2,19 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CutItUp.Data.Context;
+using CutItUp.Data.Data.Tools;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Website.Data;
-using Website.Models.CMS;
+
 
 namespace Website.Controllers
 {
     public class TapController : Controller
     {
-        private readonly WebsiteContext _context;
+        private readonly CutItUpContext _context;
 
-        public TapController(WebsiteContext context)
+        public TapController(CutItUpContext context)
         {
             _context = context;
         }

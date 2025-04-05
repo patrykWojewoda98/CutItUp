@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35913.81 d17.13
+VisualStudioVersion = 17.13.35913.81
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Website", "Website\Website.csproj", "{D182076D-8C76-40DE-AE8D-D5234E2F6FE8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Intranet", "Intranet\Intranet.csproj", "{61C0165A-751C-45AD-B5F9-C72B6954A11D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CutItUp.Data", "CutItUp.Data\CutItUp.Data.csproj", "{AA61EA90-AB65-4F88-AFB1-B8A81A18830E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{61C0165A-751C-45AD-B5F9-C72B6954A11D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61C0165A-751C-45AD-B5F9-C72B6954A11D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61C0165A-751C-45AD-B5F9-C72B6954A11D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA61EA90-AB65-4F88-AFB1-B8A81A18830E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA61EA90-AB65-4F88-AFB1-B8A81A18830E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA61EA90-AB65-4F88-AFB1-B8A81A18830E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA61EA90-AB65-4F88-AFB1-B8A81A18830E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
