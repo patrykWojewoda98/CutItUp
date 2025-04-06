@@ -7,28 +7,8 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-12 col-xl-3">
-            <div class="text-container">
-                <h2 id="mainTitle" class="mb-4">Gwintowniki Yamawa – precyzja, na której możesz polegać</h2>
-                <h4 id="subTitle">Gwintowniki Yamawa to synonim niezawodności i najwyższej jakości w obróbce gwintów. Japońska precyzja, trwałość narzędzi oraz szeroka gama modeli sprawiają, że Yamawa od lat cieszy się zaufaniem specjalistów na całym świecie. Niezależnie od tego, czy potrzebujesz gwintowania ręcznego, maszynowego czy bezwiórowego – Yamawa dostarcza rozwiązania dopasowane do najbardziej wymagających zastosowań.'</h4>
-            </div>
-            <div class="nav-buttons">
-                <input type="radio" class="btn-check" name="views" id="option1" autocomplete="off" checked onclick="changeView(1)">
-                <label class="btn" for="option1">1</label>
+        @await Html.PartialAsync("~/Views/Shared/Partials/HomeView/Promos.cshtml", (IEnumerable<CutItUp.Data.Data.CMS.MainWebsite.Promo>)ViewBag.Promos)
 
-                <input type="radio" class="btn-check" name="views" id="option2" autocomplete="off" onclick="changeView(2)">
-                <label class="btn" for="option2">2</label>
-
-                <input type="radio" class="btn-check" name="views" id="option3" autocomplete="off" onclick="changeView(3)">
-                <label class="btn" for="option3">3</label>
-
-            </div>
-        </div>
-        <div class="col-12 col-xl-9 video-container">
-            <video autoplay muted loop playsinline id="bg-video">
-                <source src="./Video/TapsVideo.mp4" type="video/mp4">
-            </video>
-        </div>
     </div>
     <div class="col-12">
         <div class="text-center">
@@ -99,32 +79,3 @@
             </div>
     </div>
 </div>
-
-
-
-
-
-<script>
-    function changeView(option) {
-      const title = document.getElementById('mainTitle');
-      const subtitle = document.getElementById('subTitle');
-      const video = document.getElementById('bg-video');
-      const source = video.querySelector('source');
-
-      if (option === 1) {
-        title.textContent = 'Gwintowniki Yamawa – precyzja, na której możesz polegać';
-        subtitle.textContent = 'Gwintowniki Yamawa to synonim niezawodności i najwyższej jakości w obróbce gwintów. Japońska precyzja, trwałość narzędzi oraz szeroka gama modeli sprawiają, że Yamawa od lat cieszy się zaufaniem specjalistów na całym świecie. Niezależnie od tego, czy potrzebujesz gwintowania ręcznego, maszynowego czy bezwiórowego – Yamawa dostarcza rozwiązania dopasowane do najbardziej wymagających zastosowań.';
-        source.src = './Video/TapsVideo.mp4';
-      } else if (option === 2) {
-        title.textContent = 'Wiertła Hilti – moc, która przebija oczekiwania';
-        subtitle.textContent = 'Wiertła Hilti to połączenie niezrównanej trwałości, precyzji i siły, które sprawdza się nawet w najtrudniejszych warunkach. Dzięki zaawansowanej technologii i solidnej konstrukcji, narzędzia Hilti umożliwiają szybkie i skuteczne wiercenie w betonie, stali oraz innych wymagających materiałach. To wybór profesjonalistów, którzy nie uznają kompromisów – zarówno na budowie, jak i w warsztacie.';
-        source.src = './Video/DrillsVideo.mp4';
-      } else if (option === 3) {
-        title.textContent = 'Frezy CERATIZIT – perfekcja w każdym skrawaniu';
-        subtitle.textContent = 'Frezy CERATIZIT Group to nowoczesne narzędzia skrawające stworzone z myślą o maksymalnej wydajności, precyzji i trwałości. Dzięki innowacyjnym rozwiązaniom technologicznym i wysokiej jakości węglikom spiekanym, frezy te doskonale radzą sobie nawet z najbardziej wymagającymi materiałami. Niezależnie od tego, czy pracujesz w lotnictwie, motoryzacji czy produkcji narzędzi – CERATIZIT zapewnia niezawodność, której możesz zaufać.';
-        source.src = './Video/MillVideo.mp4';
-      }
-        video.load();
-        video.play();
-    }
-</script>

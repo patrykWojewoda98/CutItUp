@@ -1,0 +1,52 @@
+﻿@model IEnumerable<CutItUp.Data.Data.CMS.MainWebsite.Promo>
+<div class="col">
+    <div class="row">
+        <div class="col-12 col-xl-3">
+            <div class="text-container">
+                <h2 id="mainTitle" class="mb-4">Gwintowniki Yamawa – precyzja, na której możesz polegać</h2>
+                <h4 id="subTitle">Gwintowniki Yamawa to synonim niezawodności i najwyższej jakości w obróbce gwintów. Japońska precyzja, trwałość narzędzi oraz szeroka gama modeli sprawiają, że Yamawa od lat cieszy się zaufaniem specjalistów na całym świecie. Niezależnie od tego, czy potrzebujesz gwintowania ręcznego, maszynowego czy bezwiórowego – Yamawa dostarcza rozwiązania dopasowane do najbardziej wymagających zastosowań.'</h4>
+            </div>
+            <div class="nav-buttons">
+                @foreach (var item in Model)
+                {
+                    <input type="radio"
+                           class="btn-check"
+                           name="views"
+                           id="view-option-@item.Id"
+                           autocomplete="off"
+                           onclick="changeView(this)"
+                           data-title="@item.Title"
+                           data-description="@item.Description"
+                           data-imageurl="@item.ImageUrl" />
+                    <label class="btn" for="view-option-@item.Id">@item.Id</label>
+                }
+            </div>
+        </div>
+        <div class="col-12 col-xl-9 video-container">
+            <video autoplay muted loop playsinline id="bg-video">
+                <source src="./Video/TapsVideo.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
+</div>
+
+<script>
+    function changeView(element) {
+        const title = document.getElementById('mainTitle');
+        const subtitle = document.getElementById('subTitle');
+        const video = document.getElementById('bg-video');
+        const source = video.querySelector('source');
+
+        const newTitle = element.dataset.title;
+        const newDescription = element.dataset.description;
+        const newUrl = element.dataset.imageurl;
+
+        title.textContent = newTitle;
+        subtitle.textContent = newDescription;
+        source.src = newUrl;
+
+        video.load();
+        video.play();
+    }
+</script>
+

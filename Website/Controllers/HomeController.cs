@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using CutItUp.Data.Context;
 using Microsoft.AspNetCore.Mvc;
 using Website.Models;
 
@@ -7,14 +8,19 @@ namespace Website.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly CutItUpContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, CutItUpContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            ViewBag.Promos = (
+                from promo in _context.Promo 
+                select promo).ToList();
             return View();
         }
 
