@@ -1,0 +1,20 @@
+﻿@model IEnumerable<CutItUp.Data.Data.CMS.MainWebsite.WhyUsSection>
+
+<div class="col">
+    <div class="row">
+        <div class="col">
+            @foreach (var item in Model)
+            {
+            <div class="text-center">
+                <h1>@item.Title</h1>
+            </div>
+            <div class="text-container">
+                    @foreach (var reson in item.Reasons)
+                    {
+                        <h2><i class="bi bi-check-square-fill"></i> @reson</h2>
+                    })
+            </div>
+            }
+        </div>
+    </div>
+</div>
