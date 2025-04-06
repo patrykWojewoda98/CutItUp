@@ -1,4 +1,5 @@
 ﻿using CutItUp.Data.Data;
+using CutItUp.Data.Data.CMS.GPT;
 using CutItUp.Data.Data.CMS.MainWebsite;
 using CutItUp.Data.Data.Tools;
 using Microsoft.EntityFrameworkCore;
@@ -26,5 +27,6 @@ namespace CutItUp.Data.Context
         public DbSet<WhyUsSection> WhyUsSection { get; set; } = default!;
         public DbSet<Cart> Cart { get; set; } = default!;
         public DbSet<CartTool> CartTool { get; set; } = default!;
+        public DbSet<GPTMessage> GPTMessage { get; set; } = default;
     }
 }

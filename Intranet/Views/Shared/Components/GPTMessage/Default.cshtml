@@ -1,0 +1,56 @@
+﻿@model IEnumerable<CutItUp.Data.Data.CMS.GPT.GPTMessage>
+
+<div class="col">
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10 text-center">
+            <h3 class="aiFont">Chat GPT</h3>
+            <div class="messages">
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var message in Model)
+                    {
+                        if (message.IsUsersMesssage)
+                        {
+                            <div class="question">@message.Content</div>
+                        }
+                        else
+                        {
+                            <div class="response">@message.Content</div>
+                        }
+                    }
+                }
+                else
+                {
+                    <p>No messages available.</p>
+                }
+            </div>
+            <div class="textMessage">
+                <form method="post" asp-action="SendMessage" asp-controller="Layout">
+                    <input type="text" name="message" class="form-control" placeholder="Wpisz wiadomość" />
+                    <input type="hidden" name="returnUrl" value="@Context.Request.Path" />
+                    <button type="submit" class="btn btn-primary">Wyślij</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-1">
+            @if (TempData["Response"] != null)
+            {
+                var responseMessage = TempData["Response"].ToString();
+                if (responseMessage == "Error")
+                {
+                    <div class="alert alert-danger mt-3">
+                        <strong>Wystąpił błąd podczas przetwarzania wiadomości.</strong>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-success mt-3">
+                        <strong>Odpowiedź z ChatGPT:</strong>
+                        <p>@responseMessage</p>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>

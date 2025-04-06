@@ -1,4 +1,6 @@
-﻿using Intranet.Models;
+﻿using CutItUp.Data.Context;
+using CutItUp.Data.Data.CMS.GPT;
+using Intranet.Models;
 using Intranet.Models.GPTModels;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -9,13 +11,16 @@ namespace Intranet.Controllers
     public class LayoutController : Controller
     {
         private readonly IConfiguration _configuration;
-        public LayoutController(IConfiguration configuration)
+        private readonly CutItUpContext _context;
+        public LayoutController(IConfiguration configuration, CutItUpContext context)
         {
             _configuration = configuration;
+            _context = context;
         }
         [HttpPost]
-        public async Task<IActionResult> SendMessage(MessageModel model, string returnUrl)
+        public async Task<IActionResult> SendMessage(string message, string returnUrl)
         {
+            Console.WriteLine("Message: " + message);
             HttpClient client = new HttpClient();
             string openAiApiKey = _configuration["OpenAI:ApiKey"];
             string apiUrl = "https://api.openai.com/v1/chat/completions";
@@ -25,14 +30,16 @@ namespace Intranet.Controllers
     ""messages"": [
         {{
             ""role"": ""user"",
-            ""content"": ""{model.Message}"",
+            ""content"": ""{message}"",
             ""max_output_tokens"": 100
         }}
     ]
 }}";
 
-            model.IsUsersMessage = true;
-            MessageModel.messages.Add(model);
+            GPTMessage gptMessage = new GPTMessage();
+            gptMessage.IsUsersMesssage = true;
+            gptMessage.Content = message;
+            _context.GPTMessage.Add(gptMessage);
             if (ModelState.IsValid)
             {
                 var request = new HttpRequestMessage(HttpMethod.Post, apiUrl)
@@ -52,21 +59,23 @@ namespace Intranet.Controllers
                         var data = JsonConvert.DeserializeObject<ResponseFromGPTModel>(responseString);
                         if (data.choices[0] != null)
                         {
-                            MessageModel.messages.Add(new MessageModel { Message = data.choices[0].message.content, IsUsersMessage = false });
+
+                            _context.GPTMessage.Add(new GPTMessage { IsUsersMesssage = false, Content = data.choices[0].message.content });
                         }
                         
                         
                     }
                     else
                     {
-                        MessageModel.messages.Add(new MessageModel { Message = "Błąd: " + response.StatusCode.ToString(), IsUsersMessage = false });
+                        _context.GPTMessage.Add(new GPTMessage { IsUsersMesssage = false, Content = "Błąd: " + response.StatusCode.ToString() });
 
                     }
                 }
                 catch (HttpRequestException e)
                 {
-                    MessageModel.messages.Add(new MessageModel { Message = "Błąd: " + e.Message, IsUsersMessage = false });
+                    _context.GPTMessage.Add(new GPTMessage { IsUsersMesssage = false, Content = "Błąd: " + e.Message });
                 }
+                await _context.SaveChangesAsync();
             }
             return Redirect(returnUrl);
         }
