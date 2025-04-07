@@ -1,0 +1,36 @@
+﻿@model IEnumerable<CutItUp.Data.Data.CMS.MainWebsite.Promo>
+
+<div>
+    <div class="text-center">
+        <h1>Edycja strefy promocyjnej</h1>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Tytuł</th>
+                <th scope="col">Opis</th>
+                <th scope="col">Akcje</th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <th scope="row">@item.Title</th>
+                        <th scope="row">@item.Description</th>
+                        <th scope="row">
+                            <a asp-action="Edit" asp-route-id="@item.Id" asp-controller="Promo" class="btn btn-primary">Edycja</a>
+                        </th>
+                        <th scope="row">
+                            <a asp-action="Delete" asp-route-id="@item.Id" asp-controller="Promo" class="btn btn-danger">Usuń</a>
+                        </th>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+

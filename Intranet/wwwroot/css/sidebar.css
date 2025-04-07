@@ -1,19 +1,19 @@
 ﻿nav {
-    background-color: #FAF8F5;
+    background-color: var(--primary-color);
     height: 90vh;
 }
 
 .nav-btn {
-    background-color: #FAF8F5;
+    background-color: var(--primary-color);
     border: 10px;
-    color: #258cfb;
+    color: var(--secondary-color);
     cursor: pointer;
     font-weight: bold;
     border-radius: 5px;
 }
 
     .nav-btn:hover {
-        background-color: #9a8f88;
+        background-color: var(--primary-hover-bacground-color);
         font-weight: bold;
-        color: #FAF8F5 !important;
+        color: var(--primary-color) !important;
     }

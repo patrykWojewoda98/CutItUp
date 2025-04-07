@@ -1,0 +1,32 @@
+﻿@model IEnumerable<CutItUp.Data.Data.CMS.MainWebsite.WhyUsSection>
+
+<div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Opis</th>
+                <th scope="col">Akcje</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var item in Model)
+                {
+                    foreach (var reason in item.Reasons)
+                    {
+                        <tr>
+                            <th scope="row">@item</th>
+                            <th scope="row">
+                                <a asp-action="Edit" asp-route-id="@item" asp-controller="Promo" class="btn btn-primary">Edycja</a>
+                            </th>
+                            <th scope="row">
+                                <a asp-action="Delete" asp-route-id="@item" asp-controller="Promo" class="btn btn-danger">Usuń</a>
+                            </th>
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+        <a asp-action="Create" asp-controller="WhyUsSection" class="btn btn-primary">Utwórz nowy</a>
+    </table>
+</div>

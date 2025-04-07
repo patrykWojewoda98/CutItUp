@@ -22,7 +22,6 @@ namespace CutItUp.Data.Context
         public DbSet<Drill> Drill { get; set; } = default!;
         public DbSet<SpecialTool> SpecialTool { get; set; } = default!;
         public DbSet<Tap> Tap { get; set; } = default!;
-        public DbSet<MainWebsite> MainWebsite { get; set; } = default!;
         public DbSet<Promo> Promo { get; set; } = default!;
         public DbSet<WhyUsSection> WhyUsSection { get; set; } = default!;
         public DbSet<Cart> Cart { get; set; } = default!;

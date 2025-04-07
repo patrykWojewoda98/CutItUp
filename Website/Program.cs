@@ -1,6 +1,7 @@
 ﻿using CutItUp.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<CutItUpContext>(options =>
@@ -22,6 +23,15 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(),"..", "CutItUp.Data", "Data", "Video")), // Użycie absolutnej ścieżki
+    RequestPath = "/Video"
+});
+
+
 
 app.UseRouting();
 

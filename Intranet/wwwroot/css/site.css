@@ -33,7 +33,28 @@ body {
     background-position: center;
     background-attachment: fixed;
 }
+h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--secondary-text-color);
+    text-shadow: 3px 3px 5px var(--shadow-color);
+}
+.table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    background-color: var(--primary-color);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.table-striped tbody tr:hover {
+    background-color: var(--primary-hover-bacground-color);
+    color: var(--secondary-text-color);
+}
 
+.table-striped tbody tr {
+    transition: background-color 0.5s ease, color 0.5s ease; 
+}
 
 
 .main-content {
