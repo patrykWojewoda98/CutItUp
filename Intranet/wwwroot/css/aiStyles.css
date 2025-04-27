@@ -38,7 +38,7 @@
 
 input.form-control {
     background-color: transparent !important;
-    color: white;
+    color: black;
 }
     input.form-control::placeholder {
         color: #ccc;

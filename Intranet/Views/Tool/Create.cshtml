@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Dodaj narzędzie";
+    var toolTypes = ViewBag.ToolTypes as List<string>;
+    var selectedType = ViewBag.SelectedType as string;
+}
+
+<form asp-action="Create" method="get">
+    <div class="form-group">
+        <h1 for="toolType">Wybierz typ narzędzia:</h1>
+        <select id="toolType" name="toolType" class="form-control" onchange="this.form.submit()">
+            @foreach (SelectListItem item in ViewBag.ToolTypes)
+            {
+                <option value="@item.Value" selected="@(item.Value == selectedType ? "selected" : null)">
+                    @item.Text
+                </option>
+            }
+        </select>
+    </div>
+</form>
+
+@if (!string.IsNullOrEmpty(selectedType))
+{
+    @Html.Partial($"~/Views/Tool/CreateSpecificTool/_Create{selectedType}.cshtml")
+}

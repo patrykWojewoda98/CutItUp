@@ -1,0 +1,67 @@
+﻿<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        let descIndex = $('input[name^="TitleDecriptionParts"]').length || 0;
+        let listIndex = $('input[name^="ListParts"]').length || 0;
+
+        $('.add-content').on('click', function (e) {
+            e.preventDefault();
+            const type = $(this).data('type');
+
+            if (type === "desc") {
+                const block = `
+                <div class="border p-3 mb-3">
+                    <h5>Blok: Tytuł + Opis</h5>
+                    <div class="form-group">
+                        <label>Tytuł</label>
+                        <input type="text" name="TitleDecriptionParts[${descIndex}].Title" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Opis</label>
+                        <textarea name="TitleDecriptionParts[${descIndex}].Description" class="form-control"></textarea>
+                    </div>
+                </div>`;
+                $('#contentFields').append(block);
+                descIndex++;
+            }
+
+            if (type === "list") {
+                const block = `
+                <div class="border p-3 mb-3" data-list-index="${listIndex}">
+                    <h5>Blok: Tytuł + Lista</h5>
+                    <div class="form-group">
+                        <label>Tytuł</label>
+                        <input type="text" name="ListParts[${listIndex}].Title" class="form-control" />
+                    </div>
+                    <div class="list-items-container">
+                        <div class="form-group">
+                            <label>Element 1</label>
+                            <input type="text" name="ListParts[${listIndex}].ListContent[0]" class="form-control" />
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-outline-secondary btn-sm mt-2 add-list-item" data-index="${listIndex}">
+                        Dodaj kolejny element
+                    </button>
+                </div>`;
+                $('#contentFields').append(block);
+                listIndex++;
+            }
+        });
+
+        $(document).on('click', '.add-list-item', function () {
+            const block = $(this).closest('[data-list-index]');
+            const listIndex = block.data('list-index');
+            const container = block.find('.list-items-container');
+
+            const currentCount = container.children('.form-group').length;
+            const newField = `
+                <div class="form-group mt-2">
+                    <label>Element ${currentCount + 1}</label>
+                    <input type="text" name="ListParts[${listIndex}].ListContent[${currentCount}]" class="form-control" />
+                </div>
+            `;
+            container.append(newField);
+        });
+    });
+</script>

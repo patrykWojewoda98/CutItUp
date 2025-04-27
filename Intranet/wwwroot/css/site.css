@@ -39,6 +39,11 @@ h1 {
     color: var(--secondary-text-color);
     text-shadow: 3px 3px 5px var(--shadow-color);
 }
+label {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--secondary-text-color);
+}
 .table {
     width: 100%;
     margin-top: 20px;
@@ -59,5 +64,6 @@ h1 {
 
 .main-content {
     padding-top: 10vh;
+    height: 90vh;
 }
 

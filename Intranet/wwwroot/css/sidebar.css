@@ -1,6 +1,7 @@
-﻿nav {
+﻿nav.sidebar {
     background-color: var(--primary-color);
-    height: 90vh;
+    height: auto;
+    min-height: 90vh;
 }
 
 .nav-btn {

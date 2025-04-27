@@ -1,13 +1,10 @@
 ﻿using CutItUp.Data.Data;
+using CutItUp.Data.Data.Abstractions;
+using CutItUp.Data.Data.CMS;
 using CutItUp.Data.Data.CMS.GPT;
 using CutItUp.Data.Data.CMS.MainWebsite;
 using CutItUp.Data.Data.Tools;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CutItUp.Data.Context
 {
@@ -27,5 +24,11 @@ namespace CutItUp.Data.Context
         public DbSet<Cart> Cart { get; set; } = default!;
         public DbSet<CartTool> CartTool { get; set; } = default!;
         public DbSet<GPTMessage> GPTMessage { get; set; } = default;
+        public DbSet<TitleDescriptionPart> TitleDescriptionPart { get; set; } = default!;
+        public DbSet<ListPart> ListPart { get; set; } = default!;
+        public DbSet<Website> Website { get; set; } = default!;
+        public DbSet<Tool> Tool { get; set; } = default!;
+
+
     }
 }

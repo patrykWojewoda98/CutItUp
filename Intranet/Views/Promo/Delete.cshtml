@@ -1,0 +1,55 @@
+﻿@model CutItUp.Data.Data.CMS.MainWebsite.Promo
+
+@{
+    ViewData["Title"] = "Usuń promocję";
+}
+
+<div class="container py-5 d-flex justify-content-center">
+    <div class="edit-form-wrapper p-4">
+        <h3 class="text-center mb-4 fw-bold text-danger">Usuń sekcję promocyjną</h3>
+        <p class="text-center mb-4">Czy na pewno chcesz usunąć poniższą sekcję promocyjną?</p>
+
+        <div class="mb-3">
+            <strong>Tytuł:</strong> @Model.Title
+        </div>
+
+        <div class="mb-3">
+            <strong>Opis:</strong>
+            <div>@Model.Description</div>
+        </div>
+
+        <div class="mb-4">
+            <strong>Plik promocyjny:</strong><br />
+
+            @if (!string.IsNullOrEmpty(Model.PromoFileURL))
+            {
+                var extension = System.IO.Path.GetExtension(Model.PromoFileURL).ToLower();
+
+                if (extension == ".jpg" || extension == ".jpeg" || extension == ".png" || extension == ".gif" || extension == ".webp")
+                {
+                    <img src="@Model.PromoFileURL" class="img-thumbnail mt-2 shadow" style="max-height: 200px;" />
+                }
+                else if (extension == ".pdf")
+                {
+                    <iframe src="@Model.PromoFileURL" width="100%" height="400px" class="mt-2 border rounded shadow"></iframe>
+                }
+                else
+                {
+                    <a href="@Model.PromoFileURL" target="_blank" class="btn btn-outline-primary mt-2">
+                        📁 Otwórz plik
+                    </a>
+                }
+            }
+            else
+            {
+                <div class="text-muted mt-2">Brak pliku</div>
+            }
+        </div>
+
+        <form asp-action="Delete" method="post" class="d-flex justify-content-center gap-2 mt-4">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-danger px-4">🗑 Usuń</button>
+            <a asp-action="Index" asp-controller="MainWebsite" class="btn btn-outline-secondary">← Wróć do listy</a>
+        </form>
+    </div>
+</div>

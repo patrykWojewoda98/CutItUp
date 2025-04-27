@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Lista narzędzi";
+    var toolTypes = ViewBag.ToolTypes as List<string>;
+    var selectedType = ViewBag.SelectedType as string;
+}
+
+<h1>Lista narzędzi</h1>
+
+<form asp-action="Index" method="get">
+    <div class="form-group">
+        <label for="toolType">Wybierz typ narzędzia:</label>
+        <select id="toolType" name="toolType" class="form-control" onchange="this.form.submit()">
+            <option value="">-- Wybierz typ narzędzia --</option>
+            @foreach (SelectListItem item in ViewBag.ToolTypes)
+            {
+                <option value="@item.Value" selected="@(item.Value == selectedType ? "selected" : null)">
+                    @item.Text
+                </option>
+            }
+        </select>
+    </div>
+</form>
+
+@if (!string.IsNullOrEmpty(selectedType))
+{
+    @Html.Partial($"~/Views/Tool/MagazineIndexView/_Index{selectedType}.cshtml")
+}

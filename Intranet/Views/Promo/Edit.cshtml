@@ -1,0 +1,62 @@
+﻿@model CutItUp.Data.Data.CMS.MainWebsite.Promo
+
+@{
+    ViewData["Title"] = "Edytuj promocję";
+}
+
+<div class="container py-5 d-flex justify-content-center">
+    <div class="edit-form-wrapper p-4">
+        <h3 class="text-center mb-4 fw-bold">Edytuj sekcję promocyjną</h3>
+        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            <input type="hidden" asp-for="Id" />
+
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label">Tytuł</label>
+                <input asp-for="Title" class="form-control" placeholder="Wprowadź tytuł promocji" />
+                <span asp-validation-for="Title" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label">Opis</label>
+                <textarea asp-for="Description" class="form-control" placeholder="Wprowadź opis" rows="3"></textarea>
+                <span asp-validation-for="Description" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label">Aktualny plik promocyjny:</label><br />
+                @if (!string.IsNullOrEmpty(Model.PromoFileURL))
+                {
+                    var extension = System.IO.Path.GetExtension(Model.PromoFileURL).ToLower();
+
+                    if (extension == ".jpg" || extension == ".jpeg" || extension == ".png" || extension == ".gif" || extension == ".webp")
+                    {
+                        <img src="@Model.PromoFileURL" class="img-thumbnail mt-2 shadow" style="max-height: 200px;" />
+                    }
+                    else if (extension == ".pdf")
+                    {
+                        <iframe src="@Model.PromoFileURL" width="100%" height="400px" class="mt-2 border rounded shadow"></iframe>
+                    }
+                    else
+                    {
+                        <a href="@Model.PromoFileURL" target="_blank" class="btn btn-outline-primary mt-2">📁 Otwórz plik</a>
+                    }
+                }
+                else
+                {
+                    <div class="text-muted mt-2">Brak załączonego pliku</div>
+                }
+            </div>
+
+            <div class="mb-4">
+                <label for="PromoFile" class="form-label">Nowy plik promocyjny (opcjonalnie)</label>
+                <input type="file" name="PromoFile" class="form-control" />
+            </div>
+
+            <div class="d-flex justify-content-center gap-2 mt-4">
+                <button type="submit" class="btn btn-primary px-4">💾 Zapisz zmiany</button>
+                <a asp-action="Index" asp-controller="MainWebsite" class="btn btn-outline-secondary">← Wróć do listy</a>
+            </div>
+        </form>
+    </div>
+</div>

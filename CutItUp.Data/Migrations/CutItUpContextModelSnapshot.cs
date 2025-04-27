@@ -93,6 +93,40 @@ namespace CutItUp.Data.Migrations
                     b.ToTable("GPTMessage");
                 });
 
+            modelBuilder.Entity("CutItUp.Data.Data.CMS.ListPart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ListContentSerialized")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("WebsiteId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("WebsiteId");
+
+                    b.ToTable("ListPart");
+                });
+
             modelBuilder.Entity("CutItUp.Data.Data.CMS.MainWebsite.Promo", b =>
                 {
                     b.Property<int>("Id")
@@ -137,6 +171,53 @@ namespace CutItUp.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("WhyUsSection");
+                });
+
+            modelBuilder.Entity("CutItUp.Data.Data.CMS.TitleDescriptionPart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("WebsiteId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("WebsiteId");
+
+                    b.ToTable("TitleDescriptionPart");
+                });
+
+            modelBuilder.Entity("CutItUp.Data.Data.CMS.Website", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Website");
                 });
 
             modelBuilder.Entity("CutItUp.Data.Data.Cart", b =>
@@ -230,6 +311,28 @@ namespace CutItUp.Data.Migrations
                     b.HasDiscriminator().HasValue("Tap");
                 });
 
+            modelBuilder.Entity("CutItUp.Data.Data.CMS.ListPart", b =>
+                {
+                    b.HasOne("CutItUp.Data.Data.CMS.Website", "Website")
+                        .WithMany("ListParts")
+                        .HasForeignKey("WebsiteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Website");
+                });
+
+            modelBuilder.Entity("CutItUp.Data.Data.CMS.TitleDescriptionPart", b =>
+                {
+                    b.HasOne("CutItUp.Data.Data.CMS.Website", "Website")
+                        .WithMany("TitleDecriptionParts")
+                        .HasForeignKey("WebsiteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Website");
+                });
+
             modelBuilder.Entity("CutItUp.Data.Data.CartTool", b =>
                 {
                     b.HasOne("CutItUp.Data.Data.Cart", "Cart")
@@ -247,6 +350,13 @@ namespace CutItUp.Data.Migrations
                     b.Navigation("Cart");
 
                     b.Navigation("Tool");
+                });
+
+            modelBuilder.Entity("CutItUp.Data.Data.CMS.Website", b =>
+                {
+                    b.Navigation("ListParts");
+
+                    b.Navigation("TitleDecriptionParts");
                 });
 
             modelBuilder.Entity("CutItUp.Data.Data.Cart", b =>

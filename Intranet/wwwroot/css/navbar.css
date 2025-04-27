@@ -1,28 +1,6 @@
-﻿form {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-size: 14px;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #212529;
-    text-align: left;
-    background-color: #f8f9fa;
-    position: relative;
-    min-height: auto;
-}
-
-input:focus {
-    border-color: #9A8F88 !important;
-    box-shadow: 0 0 0 0.2rem rgba(154, 143, 136, 0.25) !important;
-    outline: none;
-}
-
+﻿
 .navbar {
+    background-color: var(--primary-color);
     height: 10vh;
 }
 

@@ -1,0 +1,33 @@
+﻿@using CutItUp.Data.Data.Tools
+@{
+    var drills = ViewBag.Tools as List<Drill>;
+}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Nazwa</th>
+            <th>Kąt</th>
+            <th>Materiał</th>
+            <th>Ilość sztuk</th>
+            <th>Akcje</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var drill in drills)
+        {
+            <tr>
+                <td>@drill.Name</td>
+                <td>@drill.Angle</td>
+                <td>@drill.Material</td>
+                <td class="@(drill.NoOfToolsInMagazine < 10 ? "table-danger fw-bold" : "")">
+                    @drill.NoOfToolsInMagazine
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@drill.Id" asp-controller="Drill" class="btn btn-sm btn-warning">Edytuj</a>
+                    <a asp-action="Delete" asp-route-id="@drill.Id" asp-controller="Drill" class="btn btn-sm btn-danger">Usuń</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

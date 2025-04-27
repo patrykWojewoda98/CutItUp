@@ -1,0 +1,49 @@
+﻿@model CutItUp.Data.Data.CMS.Website
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Jaką stronę chcesz utworzyć?</h1>
+
+<div class="container mt-4">
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group">
+            <h2 asp-for="Title" class="control-label">Tytuł strony</h2>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <h2>Treść:</h2>
+
+        <div id="contentFields">
+            <!-- Dynamiczne formularze będą tutaj -->
+        </div>
+
+        <div class="dropdown mb-3">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Dodaj treść
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item add-content" href="#" data-type="desc">Tytuł + Opis</a></li>
+                <li><a class="dropdown-item add-content" href="#" data-type="list">Tytuł + Lista rzeczy</a></li>
+            </ul>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Utwórz" class="btn btn-success" />
+        </div>
+    </form>
+
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-success">Powrót do listy</a>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_DynamicScriptsPartial")
+
+}

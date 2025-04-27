@@ -1,0 +1,70 @@
+﻿@model CutItUp.Data.Data.Tools.Tap
+
+@{
+    ViewData["Title"] = "Usuń gwintownik";
+}
+
+<div class="container py-5 d-flex justify-content-center">
+    <div class="edit-form-wrapper p-4">
+        <h3 class="text-center mb-4 fw-bold text-danger">Usuń Gwintownik</h3>
+        <p class="text-center mb-4">Czy na pewno chcesz usunąć poniższe narzędzie?</p>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <strong>Nazwa:</strong> @Model.Name
+            </div>
+            <div class="col-md-6 mb-3">
+                <strong>Materiał:</strong> @Model.Material
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <strong>Opis:</strong>
+            <div>@Model.Description</div>
+        </div>
+
+        <div class="form-check mb-3">
+            <input type="checkbox" class="form-check-input" @(Model.PassThrough ? "checked" : "") disabled />
+            <label class="form-check-label">Czy przelotowy?</label>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <strong>Cena:</strong> @Model.Price
+            </div>
+            <div class="col-md-4 mb-3">
+                <strong>Wymiar:</strong> @Model.Dimension
+            </div>
+            <div class="col-md-4 mb-3">
+                <strong>Długość:</strong> @Model.Length
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <strong>Ilość w magazynie:</strong> @Model.NoOfToolsInMagazine
+            </div>
+            <div class="col-md-6 mb-3">
+                <strong>Sprzedano:</strong> @Model.NoOfSaled
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <strong>Zdjęcie narzędzia:</strong><br />
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <img src="@Model.ImageUrl" class="img-thumbnail mt-2 shadow" style="max-height: 150px;" />
+            }
+            else
+            {
+                <div class="text-muted mt-2">Brak zdjęcia</div>
+            }
+        </div>
+
+        <form asp-action="Delete" method="post" class="d-flex justify-content-center gap-2 mt-4">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-danger px-4">🗑 Usuń</button>
+            <a asp-action="Index" asp-controller="Tool" class="btn btn-outline-secondary">← Wróć do listy</a>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,89 @@
+﻿@model CutItUp.Data.Data.CMS.Website
+
+@{
+    ViewData["Title"] = "Edit";
+    var descParts = Model.TitleDecriptionParts.ToList();
+    var listParts = Model.ListParts.ToList();
+}
+
+<h1>Edytuj stronę</h1>
+
+<div class="container mt-5">
+    <div class="p-4 bg-white rounded shadow">
+        <form asp-action="Edit">
+            <input type="hidden" asp-for="Id" />
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group mb-4">
+                <label asp-for="Title" class="form-label">Tytuł strony</label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <h4>Treść:</h4>
+
+            <div id="contentFields" class="d-flex flex-column gap-3">
+                @for (int i = 0; i < descParts.Count; i++)
+                {
+                    <div class="border p-3">
+                        <h5>Blok: Tytuł + Opis</h5>
+                        <div class="form-group">
+                            <label>Tytuł</label>
+                            <input type="text" name="TitleDecriptionParts[@i].Title" value="@descParts[i].Title" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Opis</label>
+                            <textarea name="TitleDecriptionParts[@i].Description" class="form-control">@descParts[i].Description</textarea>
+                        </div>
+                    </div>
+                }
+
+                @for (int i = 0; i < listParts.Count; i++)
+                {
+                    var list = listParts[i];
+                    var listItems = list.ListContent ?? new List<string>();
+                    <div class="border p-3" data-list-index="@i">
+                        <h5>Blok: Tytuł + Lista</h5>
+                        <div class="form-group">
+                            <label>Tytuł</label>
+                            <input type="text" name="ListParts[@i].Title" value="@list.Title" class="form-control" />
+                        </div>
+
+                        <div class="list-items-container">
+                            @for (int j = 0; j < listItems.Count; j++)
+                            {
+                                <div class="form-group mt-2">
+                                    <label>Element @j</label>
+                                    <input type="text" name="ListParts[@i].ListContent[@j]" value="@listItems[j]" class="form-control" />
+                                </div>
+                            }
+                        </div>
+
+                        <button type="button" class="btn btn-outline-secondary btn-sm mt-2 add-list-item" data-index="@i">
+                            Dodaj kolejny element
+                        </button>
+                    </div>
+                }
+            </div>
+
+            <div class="dropdown mt-4 mb-3">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                    Dodaj nowy blok
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item add-content" href="#" data-type="desc">Tytuł + Opis</a></li>
+                    <li><a class="dropdown-item add-content" href="#" data-type="list">Tytuł + Lista rzeczy</a></li>
+                </ul>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Zapisz zmiany" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_DynamicScriptsPartial")
+}
