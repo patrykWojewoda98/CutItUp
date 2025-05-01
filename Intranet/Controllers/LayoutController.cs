@@ -1,6 +1,5 @@
 ﻿using CutItUp.Data.Context;
 using CutItUp.Data.Data.CMS.GPT;
-using Intranet.Models;
 using Intranet.Models.GPTModels;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;

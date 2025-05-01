@@ -18,6 +18,10 @@
 
     <script src=@("https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js")></script>
 </head>
+
+@{
+    var isLogged = Context.Session.GetString("User") != null;
+}
 <body>
     <header>
         <nav class="navbar bg-body-tertiary fixed-top">
@@ -80,13 +84,16 @@
                         <a class="nav-link text-dark nav-btn" asp-controller="Home" asp-action="Privacy"><i class="bi bi-bag-plus-fill"> Zamów</i></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark nav-btn" asp-controller="Home" asp-action="Privacy"><i class="bi bi-exclamation-diamond-fill"> Braki</i></a>
+                        <a class="nav-link text-dark nav-btn" asp-controller="Deficiency" asp-action="Index"><i class="bi bi-exclamation-diamond-fill"> Braki</i></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark nav-btn" asp-controller="MainWebsite" asp-action="Index"><i class="bi bi-exclamation-diamond-fill"> Edycja strony głownej</i></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark nav-btn" asp-controller="Website" asp-action="Index"><i class="bi bi-exclamation-diamond-fill"> Edycja pozostałych stron</i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark nav-btn" asp-controller="User" asp-action="Index"><i class="bi bi-person-fill-add"> Lista pracowników</i></a>
                     </li>
                 </ul>
             </nav>
@@ -106,4 +113,5 @@
     @await RenderSectionAsync("Scripts", required: false)
 
 </body>
+
 </html>

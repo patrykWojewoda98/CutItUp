@@ -1,0 +1,39 @@
+﻿@using CutItUp.Data.Data.Abstractions
+@{
+    ViewData["Title"] = "Lista braków";
+    var tools = ViewBag.ListOfDeficiencies as List<Tool>;
+}
+
+<h1>Lista braków</h1>
+
+<form asp-action="Index" method="get">
+    <div class="form-group">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Nazwa</th>
+                    <th>Wymiar</th>
+                    <th>Materiał</th>
+                    <th>Ilość sztuk</th>
+                    <th>Akcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var tool in tools)
+                {
+                    <tr>
+                        <td>@tool.Name</td>
+                        <td>@tool.Dimension</td>
+                        <td>@tool.Material</td>
+                        <td class= "table-danger fw-bold">
+                            @tool.NoOfToolsInMagazine
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@tool.Id" asp-controller="Drill" class="btn btn-sm btn-warning">Zamów</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</form>

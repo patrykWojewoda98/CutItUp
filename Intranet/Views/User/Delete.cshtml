@@ -1,0 +1,29 @@
+﻿@model CutItUp.Data.Data.User.User
+
+@{
+    ViewData["Title"] = "Usuń użytkownika";
+}
+
+<div class="container py-5 d-flex justify-content-center">
+    <div class="edit-form-wrapper p-4 text-center">
+        <h3 class="fw-bold text-danger mb-4">Czy na pewno usunąć tego użytkownika?</h3>
+
+        <div class="d-flex flex-column align-items-center mb-4">
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <img src="@Model.ImageUrl" class="rounded-circle shadow-sm mb-3" style="width:100px; height:100px; object-fit:cover;" />
+            }
+            <h5 class="mb-1">@Model.Name @Model.Surname</h5>
+            <p class="mb-0 text-muted">@Model.Position</p>
+            <p class="fw-semibold">@Model.Salary.ToString("N2") PLN</p>
+        </div>
+
+        <form asp-action="DeleteConfirmed" method="post">
+            <input type="hidden" asp-for="Id" />
+            <div class="d-flex justify-content-center gap-3">
+                <button type="submit" class="btn btn-danger px-4">Tak, usuń</button>
+                <a asp-action="Index" class="btn btn-outline-secondary px-4">Nie, wróć</a>
+            </div>
+        </form>
+    </div>
+</div>

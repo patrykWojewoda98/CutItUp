@@ -1,0 +1,55 @@
+﻿@model IEnumerable<CutItUp.Data.Data.User.User>
+
+@{
+    ViewData["Title"] = "Lista pracowników";
+    var counter = 1;
+}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="fw-bold m-0">Pracownicy</h1>
+        <a class="btn btn-primary" asp-action="Create"><i class="bi bi-person-fill-add"> Dodaj nowego pracownika</i></a>
+    </div>
+
+    <table class="table table-bordered align-middle shadow-sm">
+        <thead class="table-light">
+            <tr class="text-center">
+                <th style="width: 120px;">Zdjęcie</th>
+                <th>Imię</th>
+                <th>Nazwisko</th>
+                <th>Stanowisko</th>
+                <th class="text-end">Wynagrodzenie (PLN)</th>
+                <th style="width: 180px;">Akcje</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td class="text-center">
+                        <div class="d-flex flex-column align-items-center gap-1">
+                            @if (!string.IsNullOrEmpty(user.ImageUrl))
+                            {
+                                <img src="@user.ImageUrl" class="rounded-circle shadow-sm" style="width:48px; height:48px; object-fit:cover;" />
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">brak</span>
+                            }
+                        </div>
+                    </td>
+                    <td>@user.Name</td>
+                    <td>@user.Surname</td>
+                    <td>@user.Position</td>
+                    <td class="text-end">@user.Salary.ToString("N2")</td>
+                    <td class="text-center">
+                        <a asp-action="Edit" asp-route-id="@user.Id" class="btn btn-sm btn-warning me-1">Edytuj</a>
+                        <a asp-action="Delete" asp-route-id="@user.Id" class="btn btn-sm btn-danger">Usuń</a>
+                    </td>
+                </tr>
+                counter++;
+            }
+        </tbody>
+    </table>
+</div>
+

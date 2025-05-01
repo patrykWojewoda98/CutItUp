@@ -1,0 +1,61 @@
+﻿@model Intranet.Models.UserModel
+
+@{
+    ViewData["Title"] = "Dodaj użytkownika";
+}
+
+<div class="container py-5 d-flex justify-content-center">
+    <div class="edit-form-wrapper p-4">
+        <h3 class="text-center mb-4 fw-bold">Dodaj użytkownika</h3>
+
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger small"></div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <input asp-for="Name" class="form-control" placeholder="Imię" />
+                    <span asp-validation-for="Name" class="text-danger small"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <input asp-for="Surname" class="form-control" placeholder="Nazwisko" />
+                    <span asp-validation-for="Surname" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <input asp-for="Login" class="form-control" placeholder="Login" />
+                <span asp-validation-for="Login" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <input asp-for="Password" type="password" class="form-control" placeholder="Hasło" />
+                <span asp-validation-for="Password" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <select asp-for="Position" class="form-select">
+                    <option value="">-- Wybierz stanowisko --</option>
+                    <option value="Administrator">Administrator</option>
+                    <option value="Menedżer">Menedżer</option>
+                    <option value="Pracownik">Pracownik</option>
+                </select>
+                <span asp-validation-for="Position" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <input asp-for="Salary" class="form-control" placeholder="Wynagrodzenie (PLN)" />
+                <span asp-validation-for="Salary" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="ImageFile" class="form-label"></label>
+                <input asp-for="ImageFile" class="form-control" type="file" />
+            </div>
+
+            <div class="d-flex justify-content-center gap-2 mt-4">
+                <button type="submit" class="btn btn-primary">Zapisz</button>
+                <a asp-action="Index" class="btn btn-outline-secondary">← Wróć do listy</a>
+            </div>
+        </form>
+    </div>
+</div>

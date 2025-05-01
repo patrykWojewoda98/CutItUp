@@ -1,34 +1,56 @@
-﻿@using CutItUp.Data.Data.Tools
+﻿@model IEnumerable<CutItUp.Data.Data.User.User>
+
 @{
-    var tools = ViewBag.Tools as List<Mill>;
+    ViewData["Title"] = "Lista pracowników";
+    var counter = 1;
 }
 
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Nazwa</th>
-            <th>Ilość ostrzy</th>
-            <th>Materiał</th>
-            <th>Ilość sztuk</th>
-            <th>Akcje</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var tool in tools)
-        {
-            <tr>
-                <td>@tool.Name</td>
-                <td>@tool.NoCuttingEddges</td>
-                <td>@tool.Material</td>
-                <td class="@(tool.NoOfToolsInMagazine < 10 ? "table-danger fw-bold" : "")">
-                    @tool.NoOfToolsInMagazine
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@tool.Id" asp-controller="Mill" class="btn btn-sm btn-warning">Edytuj</a>
-                    <a asp-action="Delete" asp-route-id="@tool.Id" asp-controller="Mill" class="btn btn-sm btn-danger">Usuń</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="fw-bold m-0">Pracownicy</h2>
+        <a asp-action="Create" class="btn btn-primary">+ Dodaj nowego</a>
+    </div>
 
+    <table class="table table-bordered align-middle shadow-sm">
+        <thead class="table-light">
+            <tr class="text-center">
+                <th style="width: 120px;"># / Foto</th>
+                <th>Imię</th>
+                <th>Nazwisko</th>
+                <th>Stanowisko</th>
+                <th class="text-end">Wynagrodzenie (PLN)</th>
+                <th style="width: 180px;">Akcje</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td class="text-center">
+                        <div class="d-flex flex-column align-items-center gap-1">
+                            <span class="fw-semibold">@counter</span>
+                            @if (!string.IsNullOrEmpty(user.ImageUrl))
+                            {
+                                <img src="@user.ImageUrl" class="rounded-circle shadow-sm" style="width:48px; height:48px; object-fit:cover;" />
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">brak</span>
+                            }
+                        </div>
+                    </td>
+                    <td>@user.Name</td>
+                    <td>@user.Surname</td>
+                    <td>@user.Position</td>
+                    <td class="text-end">@user.Salary.ToString("N2")</td>
+                    <td class="text-center">
+                        <a asp-action="Edit" asp-route-id="@user.Id" class="btn btn-sm btn-warning me-1">Edytuj</a>
+                        <a asp-action="Details" asp-route-id="@user.Id" class="btn btn-sm btn-info me-1">Szczegóły</a>
+                        <a asp-action="Delete" asp-route-id="@user.Id" class="btn btn-sm btn-danger">Usuń</a>
+                    </td>
+                </tr>
+                counter++;
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,36 +1,32 @@
 ﻿@model IEnumerable<CutItUp.Data.Data.CMS.Website>
 
-@{
-    ViewData["Title"] = "Index";
-}
+<div>
+    <div class="text-center">
+        <h1>Edycja pozostałych stron</h1>
+    </div>
 
-<h1>Edycja pozostałych stron</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Tytuł</th>
+                <th scope="col">Akcje</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Title</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" asp-controller="Website" class="btn btn-primary">Edycja</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" asp-controller="Website" class="btn btn-danger">Usuń</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 
-
-<h1>Lista stron:</h1>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
-
-
-    <a asp-action="Create" class="btn btn-primary">Create New</a>
+    <div class="text-center mt-4">
+        <a asp-action="Create" asp-controller="Website" class="btn btn-success">➕ Utwórz nową stronę</a>
+    </div>
+</div>
