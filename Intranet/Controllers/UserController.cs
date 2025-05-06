@@ -172,7 +172,8 @@ namespace Intranet.Controllers
             if (user != null)
             {
                 ViewBag.LoginFailed = false;
-                HttpContext.Session.SetString("User", user.Name);
+                HttpContext.Session.SetString("UserName", user.Name + " "+ user.Surname);
+                HttpContext.Session.SetString("ProfileImagePath", user.ImageUrl);
                 return RedirectToAction("Index", "Home");
             }
 

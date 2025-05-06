@@ -27,10 +27,15 @@ app.UseStaticFiles();
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(
-        Path.Combine(Directory.GetCurrentDirectory(),"..", "CutItUp.Data", "Data", "Video")), // Użycie absolutnej ścieżki
+        Path.Combine(Directory.GetCurrentDirectory(),"..", "CutItUp.Data", "Data", "Video")), 
     RequestPath = "/Video"
 });
-
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(builder.Environment.ContentRootPath, "..", "CutItUp.Data", "Data", "Images")),
+    RequestPath = "/Images"
+});
 
 
 app.UseRouting();

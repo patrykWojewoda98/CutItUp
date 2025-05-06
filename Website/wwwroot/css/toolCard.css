@@ -1,0 +1,72 @@
+﻿.cardContainer {
+    width: 300px;
+    height: 500px;
+    perspective: 1000px; 
+}
+
+.myCard {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: transform 0.8s;
+    transform-style: preserve-3d; 
+}
+
+.cardContainer:hover .myCard {
+    transform: rotateY(180deg); 
+}
+
+.tool-image {
+    width: 100%;
+    height: 80%;
+    object-fit: contain; 
+    border-radius: 2rem 2rem 0 0;
+}
+
+.front,
+.back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 2rem;
+    box-shadow: 0 0 0 5px rgba(50, 50, 50, 0.25);
+    backface-visibility: hidden;
+}
+
+.front {
+    background-image: url(../images/background.png);
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+}
+
+.back {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1rem;
+    background-color: white;
+    transform: rotateY(180deg);
+    box-sizing: border-box;
+}
+
+input[type="number"] {
+    width: 70px;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    padding: 0.3rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.tool-cards-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem;
+    justify-content: center; 
+    padding: 2rem; 
+    box-sizing: border-box;
+}

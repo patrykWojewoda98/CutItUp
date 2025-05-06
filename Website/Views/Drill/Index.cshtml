@@ -4,68 +4,41 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<head>
+    <link rel="stylesheet" href="@Url.Content("~/css/toolCard.css")" />
+</head>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Angle)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Length)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Dimension)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Material)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Angle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Length)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Dimension)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Material)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="tool-cards-wrapper">
+    @foreach (var item in Model)
+    {
+
+        <div class="cardContainer">
+            <div class="myCard">
+                <div class="front">
+                    @if (item.ImageUrl != null)
+                    {
+                        <img src="@Url.Content(item.ImageUrl)" alt="@item.Name" class="tool-image" />
+                    }
+                    else
+                    {
+                        <img src="@Url.Content("~/Images/default.png")" alt="Default Image" class="tool-image" />
+                    }
+                    <h2>@item.Name</h2>
+                    <p><strong>Cena:</strong> @item.Price zł</p>
+                </div>
+                <div class="back">
+                    <h3>@item.Description</h3>
+                    <p><strong>Cena:</strong> @item.Price zł</p>
+                    <p><strong>Materiał:</strong> @item.Material</p>
+                    <p><strong>Długość:</strong> @item.Length mm</p>
+                    <p><strong>Kąt:</strong> @item.Angle°</p>
+                    <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                        <input type="hidden" name="itemId" value="@item.Id" />
+                        <input type="number" name="amount" value="1" min="1" max="100" step="1" />
+                        <button type="submit" class="btn btn-primary mt-2">Dodaj do koszyka</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+</div>

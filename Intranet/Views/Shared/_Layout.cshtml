@@ -21,6 +21,9 @@
 
 @{
     var isLogged = Context.Session.GetString("User") != null;
+    var userName = Context.Session.GetString("UserName") ?? "Gość";
+    var avatarUrl = Context.Session.GetString("ProfileImagePath") ?? "~/images/placeholder.png";
+
 }
 <body>
     <header>
@@ -31,8 +34,8 @@
                 </a>
                 <div class="d-flex align-items-center gap-3">
                     <div class="profile d-flex align-items-center">
-                        <h5 class="mb-0 me-2 d-none d-md-block">Patryk Wojewoda</h5>
-                        <img src="~/images/Logo.png" class="profile-pic" alt="Profil" />
+                        <h5 class="mb-0 me-2 d-none d-md-block">@userName</h5>
+                        <img src="@avatarUrl" class="profile-pic" alt="Profil" />
                     </div>
                     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
                     data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"
@@ -42,7 +45,7 @@
                 </div>
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                     <div class="offcanvas-header">
-                        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Witaj Patryk Wojewoda</h5>
+                        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Witaj @userName</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">
