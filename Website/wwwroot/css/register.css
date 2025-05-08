@@ -1,0 +1,93 @@
+﻿@import url('https://fonts.googleapis.com/css?family=Numans');
+
+.register-page html,
+.register-page body {
+    height: 100%;
+    font-family: 'Numans', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.register-page .container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.register-page .register-wrapper {
+    min-height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.register-page .card {
+    width: 800px;
+    height: 550px;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    padding: 20px;
+}
+
+.register-page .card-header h3 {
+    color: white;
+}
+
+.register-page .social_icon {
+    position: absolute;
+    right: 20px;
+    top: -45px;
+}
+
+    .register-page .social_icon span {
+        font-size: 60px;
+        margin-left: 10px;
+        color: #FFC312;
+    }
+
+        .register-page .social_icon span:hover {
+            color: white;
+            cursor: pointer;
+        }
+
+.register-page .input-group-prepend span {
+    width: 50px;
+    background-color: #FFC312;
+    color: black;
+    border: 0 !important;
+}
+
+.register-page input:focus {
+    box-shadow: none !important;
+    outline: 0 !important;
+}
+
+.register-page .login_btn {
+    color: black;
+    background-color: #FFC312;
+    width: 100%;
+}
+
+    .register-page .login_btn:hover {
+        color: black;
+        background-color: white;
+    }
+
+.register-page .links {
+    color: white;
+}
+
+    .register-page .links a {
+        margin-left: 4px;
+        color: #FFC312;
+    }
+
+.register-page .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.register-page .form-col {
+    flex: 1 1 45%;
+}

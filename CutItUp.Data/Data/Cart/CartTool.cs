@@ -1,13 +1,9 @@
 ﻿using CutItUp.Data.Data.Abstractions;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace CutItUp.Data.Data
+
+namespace CutItUp.Data.Data.Cart
 {
     public class CartTool
     {
@@ -17,6 +13,8 @@ namespace CutItUp.Data.Data
         public int CartId { get; set; }
         [Required]
         public int ToolId { get; set; }
+        [Required]
+        public int QuantityOfTools { get; set; } = 1;
         [ForeignKey("CartId")]
         public Cart Cart { get; set; } = null!;
         [ForeignKey("ToolId")]

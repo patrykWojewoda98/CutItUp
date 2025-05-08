@@ -57,8 +57,12 @@ namespace Intranet.Controllers
 
                 drill.ImageUrl = $"/Images/{fileName}";
             }
+            else
+            {
+                drill.ImageUrl = "/Images/default.png"; 
+            }
 
-            _context.Add(drill);
+                _context.Add(drill);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index", "Tool");
         }

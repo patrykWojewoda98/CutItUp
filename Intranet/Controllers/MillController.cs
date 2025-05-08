@@ -52,6 +52,10 @@ namespace Intranet.Controllers
 
                     mill.ImageUrl = $"/Images/{safeFileName}";
                 }
+                else
+                {
+                    mill.ImageUrl = "/Images/default.png"; 
+                }
 
                 _context.Add(mill);
                 await _context.SaveChangesAsync();

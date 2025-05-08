@@ -1,5 +1,4 @@
-﻿﻿
-<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="pl">
 <head>
     <meta charset="utf-8" />
@@ -8,7 +7,7 @@
     <link rel="stylesheet" href="~/css/colors.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Website.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/css/logo.css" asp-append-version="true" />
@@ -17,6 +16,12 @@
     @RenderSection("Styles", required: false)
 
 </head>
+@{
+    var isLogged = Context.Session.GetString("ClientName") != null;
+    var clientName = Context.Session.GetString("ClientName") ?? "Gość";
+    var avatarUrl = Context.Session.GetString("ProfileImagePath") ?? "~/images/placeholder.png";
+
+}
 <body>
     <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -59,9 +64,19 @@
                     </ul>
                 </div>
                 <div class="profile d-flex align-items-center">
-                    <a asp-controller="Home" asp-action="Privacy">
-                        <i class="bi bi-cart-fill cart-pic"></i>
-                    </a>
+                    @if (isLogged)
+                    {
+                        <a asp-controller="CartTool" asp-action="Index">
+                            <i class="bi bi-cart-fill cart-pic"></i>
+                        </a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Client" asp-action="Index">
+                            <i class="bi bi-cart-fill cart-pic"></i>
+                        </a>
+                    }
+
                     <h5 class="mb-0 me-2 d-none d-md-block">Patryk Wojewoda</h5>
                 </div>
             </div>

@@ -61,6 +61,10 @@ namespace Intranet.Controllers
 
                     specialTool.ImageUrl = $"/Images/{fileName}";
                 }
+                else
+                {
+                    specialTool.ImageUrl = "/Images/default.png"; 
+                }
 
                 _context.Add(specialTool);
                 await _context.SaveChangesAsync();

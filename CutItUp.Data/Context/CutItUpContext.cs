@@ -1,5 +1,7 @@
 ﻿using CutItUp.Data.Data;
 using CutItUp.Data.Data.Abstractions;
+using CutItUp.Data.Data.Cart;
+using CutItUp.Data.Data.Client;
 using CutItUp.Data.Data.CMS;
 using CutItUp.Data.Data.CMS.GPT;
 using CutItUp.Data.Data.CMS.MainWebsite;
@@ -30,5 +32,7 @@ namespace CutItUp.Data.Context
         public DbSet<Website> Website { get; set; } = default!;
         public DbSet<Tool> Tool { get; set; } = default!;
         public DbSet<User> User { get; set; } = default!;
+        public DbSet<Order> Order { get; set; } = default!;
+        public DbSet<Client> Client { get; set; } = default!;
     }
 }

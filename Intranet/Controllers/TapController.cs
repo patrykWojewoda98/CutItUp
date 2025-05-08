@@ -61,6 +61,10 @@ namespace Intranet.Controllers
 
                     tap.ImageUrl = $"/Images/{safeFileName}";
                 }
+                else
+                {
+                    tap.ImageUrl = "/Images/default.png"; 
+                }
 
                 _context.Add(tap);
                 await _context.SaveChangesAsync();

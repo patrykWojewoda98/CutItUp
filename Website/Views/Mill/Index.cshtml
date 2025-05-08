@@ -8,20 +8,17 @@
     <link rel="stylesheet" href="@Url.Content("~/css/toolCard.css")" />
 </head>
 
+@{
+    var isLoggedIn = Context.Session.GetInt32("ClientId").HasValue;
+    var clientID = Context.Session.GetInt32("ClientId");
+}
 <div class="tool-cards-wrapper">
     @foreach (var item in Model)
     {
         <div class="cardContainer">
             <div class="myCard">
                 <div class="front">
-                    @if (!string.IsNullOrEmpty(item.ImageUrl))
-                    {
-                        <img src="@Url.Content(item.ImageUrl)" alt="@item.Name" class="tool-image" />
-                    }
-                    else
-                    {
-                        <img src="@Url.Content("~/Images/default.png")" alt="Default Image" class="tool-image" />
-                    }
+                    <img src="@Url.Content(item.ImageUrl)" alt="@item.Name" class="tool-image" />
                     <h2>@item.Name</h2>
                     <p><strong>Cena:</strong> @item.Price zł</p>
                 </div>
@@ -32,17 +29,25 @@
                     <p><strong>Wymiar:</strong> @item.Dimension mm</p>
                     <p><strong>Ilość krawędzi tnących:</strong> @item.NoCuttingEddges</p>
 
-                    <form asp-controller="Cart" asp-action="AddToCart" method="post">
-                        <input type="hidden" name="itemId" value="@item.Id" />
-                        <input type="number" name="amount" value="1" min="1" max="100" step="1" />
-                        <button type="submit" class="btn btn-primary mt-2">Dodaj do koszyka</button>
-                    </form>
+                    @{
+                        if (isLoggedIn)
+                        {
+                            <form asp-controller="CartTool" asp-action="AddToCart" method="post">
+                                <input type="hidden" name="itemId" value="@item.Id" />
+                                <input type="hidden" name="clientID" value="@clientID" />
 
-                    <div class="mt-2">
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edytuj</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Szczegóły</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Usuń</a>
-                    </div>
+                                <input type="number" name="amount" value="1" min="1" max="100" step="1" />
+                                <button type="submit" class="btn btn-primary mt-2">Dodaj do koszyka</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <a asp-controller="Client" asp-action="Index" class="btn btn-primary">Dodaj do koszyka</a>
+                        }
+                    }
+
+
+
                 </div>
             </div>
         </div>
