@@ -17,9 +17,15 @@ namespace CutItUp.Data.Data
         public string Status { get; set; } = "Oczekujące";
 
         [Required]
-        public int CartId { get; set; }
+        public int CartToolId { get; set; }
 
         [ForeignKey("CartId")]
-        public CutItUp.Data.Data.Cart.Cart Cart { get; set; } = null!;
+        public CutItUp.Data.Data.Cart.CartTool CartTool { get; set; } = null!;
+        
+        [Required]
+        public int ClientId { get; set; }
+        [ForeignKey("ClientId")]
+        public CutItUp.Data.Data.Client.Client Client { get; set; } = null!;
+
     }
 }

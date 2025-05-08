@@ -31,8 +31,8 @@ namespace CutItUp.Data.Context
         public DbSet<ListPart> ListPart { get; set; } = default!;
         public DbSet<Website> Website { get; set; } = default!;
         public DbSet<Tool> Tool { get; set; } = default!;
-        public DbSet<User> User { get; set; } = default!;
         public DbSet<Order> Order { get; set; } = default!;
         public DbSet<Client> Client { get; set; } = default!;
+        public DbSet<User> User { get; set; } = default!;
     }
 }

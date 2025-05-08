@@ -1,4 +1,5 @@
-﻿﻿<!DOCTYPE html>
+﻿@using CutItUp.Data.Context
+﻿<!DOCTYPE html>
 <html lang="pl">
 <head>
     <meta charset="utf-8" />
@@ -16,11 +17,13 @@
     @RenderSection("Styles", required: false)
 
 </head>
+@inject CutItUpContext _context
 @{
     var isLogged = Context.Session.GetString("ClientName") != null;
     var clientName = Context.Session.GetString("ClientName") ?? "Gość";
     var avatarUrl = Context.Session.GetString("ProfileImagePath") ?? "~/images/placeholder.png";
 
+    var dynamicPages = _context.Website.ToList();
 }
 <body>
     <header>
@@ -36,11 +39,15 @@
                                 Strona Głowna
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark nav-btn" asp-area="" asp-controller="Home" asp-action="Index">
-                                O nas
-                            </a>
-                        </li>
+
+                        @foreach (var page in dynamicPages)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark nav-btn" asp-controller="Website" asp-action="Show" asp-route-id="@(page.Id)">
+                                    @(page.Title)
+                                </a>
+                            </li>
+                        }
                         <li class="nav-item">
                             <a class="nav-link text-dark nav-btn" asp-area="" asp-controller="Drill" asp-action="Index">
                                 Wiertła

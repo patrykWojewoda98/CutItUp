@@ -2,50 +2,63 @@
 
 <script>
     $(document).ready(function () {
-        let descIndex = $('input[name^="TitleDecriptionParts"]').length || 0;
-        let listIndex = $('input[name^="ListParts"]').length || 0;
+        function getNextDescIndex() {
+            let indexes = $('input[name^="TitleDecriptionParts"]').map(function () {
+                const match = $(this).attr('name').match(/TitleDecriptionParts\[(\d+)]/);
+                return match ? parseInt(match[1]) : -1;
+            }).get();
+            return indexes.length ? Math.max(...indexes) + 1 : 0;
+        }
+
+        function getNextListIndex() {
+            let indexes = $('input[name^="ListParts"]').map(function () {
+                const match = $(this).attr('name').match(/ListParts\[(\d+)]/);
+                return match ? parseInt(match[1]) : -1;
+            }).get();
+            return indexes.length ? Math.max(...indexes) + 1 : 0;
+        }
 
         $('.add-content').on('click', function (e) {
             e.preventDefault();
             const type = $(this).data('type');
 
             if (type === "desc") {
+                const index = getNextDescIndex();
                 const block = `
-                <div class="border p-3 mb-3">
-                    <h5>Blok: Tytuł + Opis</h5>
-                    <div class="form-group">
-                        <label>Tytuł</label>
-                        <input type="text" name="TitleDecriptionParts[${descIndex}].Title" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label>Opis</label>
-                        <textarea name="TitleDecriptionParts[${descIndex}].Description" class="form-control"></textarea>
-                    </div>
-                </div>`;
+                    <div class="border p-3 mb-3">
+                        <h5>Blok: Tytuł + Opis</h5>
+                        <div class="form-group">
+                            <label>Tytuł</label>
+                            <input type="text" name="TitleDecriptionParts[${index}].Title" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Opis</label>
+                            <textarea name="TitleDecriptionParts[${index}].Description" class="form-control"></textarea>
+                        </div>
+                    </div>`;
                 $('#contentFields').append(block);
-                descIndex++;
             }
 
             if (type === "list") {
+                const index = getNextListIndex();
                 const block = `
-                <div class="border p-3 mb-3" data-list-index="${listIndex}">
-                    <h5>Blok: Tytuł + Lista</h5>
-                    <div class="form-group">
-                        <label>Tytuł</label>
-                        <input type="text" name="ListParts[${listIndex}].Title" class="form-control" />
-                    </div>
-                    <div class="list-items-container">
+                    <div class="border p-3 mb-3" data-list-index="${index}">
+                        <h5>Blok: Tytuł + Lista</h5>
                         <div class="form-group">
-                            <label>Element 1</label>
-                            <input type="text" name="ListParts[${listIndex}].ListContent[0]" class="form-control" />
+                            <label>Tytuł</label>
+                            <input type="text" name="ListParts[${index}].Title" class="form-control" />
                         </div>
-                    </div>
-                    <button type="button" class="btn btn-outline-secondary btn-sm mt-2 add-list-item" data-index="${listIndex}">
-                        Dodaj kolejny element
-                    </button>
-                </div>`;
+                        <div class="list-items-container">
+                            <div class="form-group">
+                                <label>Element 1</label>
+                                <input type="text" name="ListParts[${index}].ListContent[0]" class="form-control" />
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-outline-secondary btn-sm mt-2 add-list-item" data-index="${index}">
+                            Dodaj kolejny element
+                        </button>
+                    </div>`;
                 $('#contentFields').append(block);
-                listIndex++;
             }
         });
 
@@ -59,8 +72,7 @@
                 <div class="form-group mt-2">
                     <label>Element ${currentCount + 1}</label>
                     <input type="text" name="ListParts[${listIndex}].ListContent[${currentCount}]" class="form-control" />
-                </div>
-            `;
+                </div>`;
             container.append(newField);
         });
     });

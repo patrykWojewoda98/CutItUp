@@ -2,8 +2,6 @@
 
 @{
     ViewData["Title"] = "Edit";
-    var descParts = Model.TitleDecriptionParts.ToList();
-    var listParts = Model.ListParts.ToList();
 }
 
 <h1>Edytuj stronę</h1>
@@ -24,45 +22,54 @@
             <h4>Treść:</h4>
 
             <div id="contentFields" class="d-flex flex-column gap-3">
-                @for (int i = 0; i < descParts.Count; i++)
+                @for (int i = 0; i < Model.TitleDecriptionParts.Count(); i++)
                 {
+                    var item = Model.TitleDecriptionParts.ElementAt(i);
                     <div class="border p-3">
                         <h5>Blok: Tytuł + Opis</h5>
+                        <input type="hidden" name="TitleDecriptionParts[@i].Id" value="@item.Id" />
                         <div class="form-group">
                             <label>Tytuł</label>
-                            <input type="text" name="TitleDecriptionParts[@i].Title" value="@descParts[i].Title" class="form-control" />
+                            <input type="text" name="TitleDecriptionParts[@i].Title" value="@item.Title" class="form-control" />
                         </div>
                         <div class="form-group">
                             <label>Opis</label>
-                            <textarea name="TitleDecriptionParts[@i].Description" class="form-control">@descParts[i].Description</textarea>
+                            <textarea name="TitleDecriptionParts[@i].Description" class="form-control">@item.Description</textarea>
                         </div>
+                        <a asp-action="Delete" asp-route-id="@item.Id" asp-controller="Mill" class="btn btn-sm btn-danger">Usuń</a>
                     </div>
                 }
 
-                @for (int i = 0; i < listParts.Count; i++)
+                @for (int i = 0; i < Model.ListParts.Count(); i++)
                 {
-                    var list = listParts[i];
-                    var listItems = list.ListContent ?? new List<string>();
-                    <div class="border p-3" data-list-index="@i">
+                    var item = Model.ListParts.ElementAt(i);
+                    <div class="border p-3 list-block">
                         <h5>Blok: Tytuł + Lista</h5>
+                        <input type="hidden" name="ListParts[@i].Id" value="@item.Id" />
                         <div class="form-group">
                             <label>Tytuł</label>
-                            <input type="text" name="ListParts[@i].Title" value="@list.Title" class="form-control" />
+                            <input type="text" name="ListParts[@i].Title" value="@item.Title" class="form-control" />
                         </div>
 
                         <div class="list-items-container">
-                            @for (int j = 0; j < listItems.Count; j++)
+                            @for (int j = 0; j < item.ListContent.Count; j++)
                             {
-                                <div class="form-group mt-2">
-                                    <label>Element @j</label>
-                                    <input type="text" name="ListParts[@i].ListContent[@j]" value="@listItems[j]" class="form-control" />
+                                <div class="form-group mt-2 list-item d-flex gap-2 align-items-center">
+                                    <label class="mb-0">Element @j</label>
+                                    <input type="text" name="ListParts[@i].ListContent[@j]" value="@item.ListContent[j]" class="form-control" />
+                                    <button type="button" class="btn btn-danger btn-sm remove-list-item">Usuń</button>
                                 </div>
                             }
                         </div>
 
-                        <button type="button" class="btn btn-outline-secondary btn-sm mt-2 add-list-item" data-index="@i">
-                            Dodaj kolejny element
-                        </button>
+                        <div class="mt-2 d-flex gap-2">
+                            <button type="button" class="btn btn-outline-secondary btn-sm mt-2 add-list-item" data-index="@i">
+                                Dodaj kolejny element
+                            </button>
+                            <button type="button" class="btn btn-outline-danger btn-sm remove-block">
+                                Usuń blok
+                            </button>
+                        </div>
                     </div>
                 }
             </div>

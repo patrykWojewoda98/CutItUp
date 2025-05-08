@@ -1,0 +1,45 @@
+﻿@model CutItUp.Data.Data.CMS.Website
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="container mt-5">
+    <h1 class="mb-4">@Model.Title</h1>
+
+    @* Bloki typu Tytuł + Opis *@
+    @foreach (var part in Model.TitleDecriptionParts)
+    {
+        <div class="mb-4">
+            <h3>@part.Title</h3>
+            <p>sdfsdfsdfsdf</p>
+            <h3>@part.Description</h3>
+            @if (!string.IsNullOrEmpty(part.ImageUrl))
+            {
+                <img src="@Url.Content(part.ImageUrl)" alt="Obrazek" class="img-fluid" />
+            }
+        </div>
+    }
+
+    @* Bloki typu Tytuł + Lista *@
+    @foreach (var part in Model.ListParts)
+    {
+        <div class="mb-4">
+            <h3>@part.Title</h3>
+            @if (!string.IsNullOrEmpty(part.Description))
+            {
+                <p>@part.Description</p>
+            }
+            <ul>
+                @foreach (var item in part.ListContent)
+                {
+                    <li>@item</li>
+                }
+            </ul>
+            @if (!string.IsNullOrEmpty(part.ImageUrl))
+            {
+                <img src="@Url.Content(part.ImageUrl)" alt="Obrazek" class="img-fluid" />
+            }
+        </div>
+    }
+</div>
