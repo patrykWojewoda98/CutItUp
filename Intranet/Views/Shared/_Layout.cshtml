@@ -23,7 +23,7 @@
     var isLogged = Context.Session.GetString("User") != null;
     var userName = Context.Session.GetString("UserName") ?? "Gość";
     var avatarUrl = Context.Session.GetString("ProfileImagePath") ?? "~/images/placeholder.png";
-
+    var userId = Context.Session.GetInt32("UserId");
 }
 <body>
     <header>
@@ -51,17 +51,19 @@
                     <div class="offcanvas-body">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link text-dark nav-btn" asp-area="" asp-controller="Home" asp-action="Index">
+                                <a class="nav-link text-dark nav-btn" asp-area="" asp-controller="User" asp-action="Details" asp-route-userId="@userId">
                                     <i class="bi bi-person-circle">Profil</i>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark nav-btn" asp-controller="Home" asp-action="Privacy">
+                                <a asp-action="EditAccount" asp-route-userId="@userId" asp-controller="User" class="nav-link text-dark nav-btn">
                                     <i class="bi bi-gear-fill">Ustawienia</i>
                                 </a>
                             </li>
                         </ul>
-                        <button type="button" class="btn btn-danger">Wyloguj</button>
+                        <a class="btn btn-danger" asp-area="" asp-controller="User" asp-action="Logout">
+                            Wyloguj
+                        </a>
                     </div>
                 </div>
             </div>

@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using CutItUp.Data.Context;
 using CutItUp.Data.Data.CMS.MainWebsite;
 using Microsoft.Extensions.Hosting;
+using System.Diagnostics;
+using Intranet.Models.DTO;
 
 namespace Intranet.Controllers.MainWebsideControllers
 {
@@ -57,9 +59,9 @@ namespace Intranet.Controllers.MainWebsideControllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Promo promo, IFormFile PromoFile)
+        public async Task<IActionResult> Create(PromoDTO promo, IFormFile PromoFile)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && PromoFile != null)
             {
                 var safeFileName = $"{Path.GetFileNameWithoutExtension(PromoFile.FileName)}_{DateTime.Now:yyyyMMdd_HHmmss}{Path.GetExtension(PromoFile.FileName)}";
                 var videoDir = Path.Combine(_environment.ContentRootPath, "..", "CutItUp.Data", "Data", "Video");
@@ -70,15 +72,24 @@ namespace Intranet.Controllers.MainWebsideControllers
                 {
                     await PromoFile.CopyToAsync(stream);
                 }
+                var finalPromo = new Promo
+                {
+                    Title = promo.Title,
+                    Description = promo.Description,
+                    PromoFileURL = $"/Video/{safeFileName}"
+                };
 
                 promo.PromoFileURL = $"/Video/{safeFileName}";
-                _context.Add(promo);
+                _context.Add(finalPromo);
                 await _context.SaveChangesAsync();
 
                 return RedirectToAction("Index", "MainWebsite");
             }
+
+            ModelState.AddModelError("PromoFile", "Plik promocyjny jest wymagany.");
             return View(promo);
         }
+
 
 
 

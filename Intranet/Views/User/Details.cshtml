@@ -1,0 +1,53 @@
+﻿@model Intranet.Models.UserModel
+
+@{
+    ViewData["Title"] = "Szczegóły użytkownika";
+}
+
+<div class="container py-5 d-flex justify-content-center">
+    <div class="details-wrapper card p-4" style="max-width: 600px; border-radius: 10px;">
+        <h3 class="text-center mb-4 fw-bold">Szczegóły użytkownika</h3>
+
+        <div class="text-center mb-4">
+            @if (!string.IsNullOrEmpty(Model.ExistingImageUrl))
+            {
+                <img src="@Model.ExistingImageUrl" class="img-thumbnail shadow" style="max-height: 150px; object-fit: cover; border-radius: 10px;" />
+            }
+            else
+            {
+                <img src="~/images/placeholder.png" class="img-thumbnail shadow" style="max-height: 150px; object-fit: cover; border-radius: 10px;" />
+            }
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <strong>Imię:</strong>
+                <p>@Model.Name</p>
+            </div>
+            <div class="col-md-6">
+                <strong>Nazwisko:</strong>
+                <p>@Model.Surname</p>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <strong>Login:</strong>
+            <p>@Model.Login</p>
+        </div>
+
+        <div class="mb-3">
+            <strong>Stanowisko:</strong>
+            <p>@Model.Position</p>
+        </div>
+
+        <div class="mb-3">
+            <strong>Wynagrodzenie:</strong>
+            <p>@Model.Salary.ToString("N2") PLN</p>
+        </div>
+
+        <div class="d-flex justify-content-center gap-2 mt-4">
+            <a asp-action="EditAccount" asp-route-userId="@Model.Id" class="btn btn-warning">Edytuj użytkownika</a>
+            <a asp-action="Index" class="btn btn-outline-secondary">← Wróć do listy</a>
+        </div>
+    </div>
+</div>

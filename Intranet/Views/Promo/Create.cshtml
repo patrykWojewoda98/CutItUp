@@ -1,42 +1,37 @@
-﻿@model CutItUp.Data.Data.CMS.MainWebsite.Promo
+﻿@model Intranet.Models.DTO.PromoDTO;
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Utwórz promocję";
 }
 
-<div class="row">
-    <div class="col">
-        <form asp-action="Create" method="post" asp-controller="Promo" enctype="multipart/form-data">
+<div class="container py-5 d-flex justify-content-center">
+    <div class="edit-form-wrapper p-4">
+        <h3 class="text-center mb-4 fw-bold">Utwórz sekcję promocyjną</h3>
+        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+        <form asp-action="Create" asp-controller="Promo" method="post" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
 
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-            <div class="form-group">
-                <label asp-for="Title" class="control-label">Title</label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label">Tytuł</label>
+                <input asp-for="Title" class="form-control" placeholder="Wprowadź tytuł promocji" />
+                <span asp-validation-for="Title" class="text-danger small"></span>
             </div>
 
-            <div class="form-group">
-                <label asp-for="Description" class="control-label">Description</label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label">Opis</label>
+                <textarea asp-for="Description" class="form-control" placeholder="Wprowadź opis" rows="3"></textarea>
+                <span asp-validation-for="Description" class="text-danger small"></span>
             </div>
 
-            <div class="form-group">
-                <label for="PromoFile" class="control-label">Promo File</label>
-                <input type="file" name="PromoFile" class="form-control" id="PromoFile" />
+            <div class="mb-4">
+                <label for="PromoFile" class="form-label">Nowy plik promocyjny</label>
+                <input type="file" name="PromoFile" class="form-control" required />
             </div>
 
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="d-flex justify-content-center gap-2 mt-4">
+                <button type="submit" class="btn btn-primary px-4">💾 Zapisz promocję</button>
+                <a asp-action="Index" asp-controller="MainWebsite" class="btn btn-outline-secondary">← Wróć do listy</a>
             </div>
         </form>
     </div>
-    <div class="col">
-        <a asp-action="Index" asp-controller="MainWebsite" class="btn btn-primary">Powrót do edycji strony głównej</a>
-    </div>
 </div>
-
-
-

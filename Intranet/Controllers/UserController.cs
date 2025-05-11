@@ -5,6 +5,7 @@ using CutItUp.Data.Data.User;
 using System.Text;
 using System.Security.Cryptography;
 using Intranet.Models;
+using System.Diagnostics;
 
 namespace Intranet.Controllers
 {
@@ -21,6 +22,8 @@ namespace Intranet.Controllers
 
         public async Task<IActionResult> Index()
         {
+            Debug.WriteLine("Uruchomiłem sie" );
+            Debug.WriteLine("UserId: " + HttpContext.Session.GetInt32("UserId"));
             return View(await _context.User.Where(u=>u.Position!="Client").ToListAsync());
         }
 
@@ -84,6 +87,27 @@ namespace Intranet.Controllers
             return View(model); 
         }
 
+        public async Task<IActionResult> EditAccount(int? userId)
+        {
+            if (userId == null) return NotFound();
+
+            var user = await _context.User.FirstOrDefaultAsync(x => x.Id == userId);
+            if (user == null) return NotFound();
+
+            var model = new UserModel
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Surname = user.Surname,
+                Login = user.Login,
+                Position = user.Position,
+                Salary = user.Salary,
+                ExistingImageUrl = user.ImageUrl
+            };
+
+            return View(model);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(UserModel model)
@@ -132,6 +156,53 @@ namespace Intranet.Controllers
         }
 
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditAccount(UserModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var user = await _context.User.FirstOrDefaultAsync(x => x.Id == model.Id);
+            if (user == null) return NotFound();
+
+            user.Name = model.Name;
+            user.Surname = model.Surname;
+            user.Login = model.Login;
+            user.Position = model.Position;
+            user.Salary = model.Salary;
+
+            if (!string.IsNullOrEmpty(model.Password))
+                user.PasswordHash = HashPassword(model.Password);
+
+            if (model.ImageFile != null)
+            {
+                // Usuń stare zdjęcie
+                if (!string.IsNullOrEmpty(user.ImageUrl))
+                {
+                    var oldPath = Path.Combine(_environment.ContentRootPath, "..", "CutItUp.Data", "Data", user.ImageUrl.TrimStart('/'));
+                    if (System.IO.File.Exists(oldPath)) System.IO.File.Delete(oldPath);
+                }
+
+                var fileName = $"{Path.GetFileNameWithoutExtension(model.ImageFile.FileName)}_{DateTime.Now:yyyyMMdd_HHmmss}{Path.GetExtension(model.ImageFile.FileName)}";
+                var uploadPath = Path.Combine(_environment.ContentRootPath, "..", "CutItUp.Data", "Data", "Images");
+                Directory.CreateDirectory(uploadPath);
+                var fullPath = Path.Combine(uploadPath, fileName);
+
+                using (var stream = new FileStream(fullPath, FileMode.Create))
+                {
+                    await model.ImageFile.CopyToAsync(stream);
+                }
+
+                user.ImageUrl = $"/Images/{fileName}";
+            }
+
+            _context.Update(user);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
 
         public async Task<IActionResult> Delete(int? id)
         {
@@ -174,12 +245,24 @@ namespace Intranet.Controllers
                 ViewBag.LoginFailed = false;
                 HttpContext.Session.SetString("UserName", user.Name + " "+ user.Surname);
                 HttpContext.Session.SetString("ProfileImagePath", user.ImageUrl);
+                HttpContext.Session.SetInt32("UserId", user.Id);
                 return RedirectToAction("Index", "Home");
             }
 
             ViewBag.LoginFailed = true;
             return View("Login");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+                HttpContext.Session.Remove("UserName");
+                HttpContext.Session.Remove("ProfileImagePath");
+                HttpContext.Session.Remove("UserID");
+             
+            return View("Login");
+        }
+
         [HttpGet]
         public IActionResult Login()
         {
@@ -193,6 +276,28 @@ namespace Intranet.Controllers
                 var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
                 return Convert.ToBase64String(hashedBytes);
             }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int? userId)
+        {
+            if (userId == null) return NotFound();
+
+            var user = await _context.User.FirstOrDefaultAsync(u => u.Id == userId);
+            if (user == null) return NotFound();
+
+            var model = new UserModel
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Surname = user.Surname,
+                Login = user.Login,
+                Position = user.Position,
+                Salary = user.Salary,
+                ExistingImageUrl = user.ImageUrl
+            };
+
+            return View("Details", model);
         }
     }
 }
