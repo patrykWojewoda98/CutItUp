@@ -1,49 +1,51 @@
 ﻿@model CutItUp.Data.Data.CMS.Website
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Utwórz stronę";
 }
 
-<h1>Jaką stronę chcesz utworzyć?</h1>
+<div class="container py-5 d-flex justify-content-center">
+    <div class="edit-form-wrapper p-4">
+        <h3 class="text-center mb-4 fw-bold">Utwórz nową stronę</h3>
 
-<div class="container mt-4">
-    <form asp-action="Create">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-        <div class="form-group">
-            <h2 asp-for="Title" class="control-label">Tytuł strony</h2>
-            <input asp-for="Title" class="form-control" />
-            <span asp-validation-for="Title" class="text-danger"></span>
-        </div>
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
 
-        <h2>Treść:</h2>
+            <!-- Tytuł strony -->
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label">Tytuł strony</label>
+                <input asp-for="Title" class="form-control" placeholder="Wprowadź tytuł strony" />
+                <span asp-validation-for="Title" class="text-danger small"></span>
+            </div>
 
-        <div id="contentFields">
-            <!-- Dynamiczne formularze będą tutaj -->
-        </div>
+            <h4 class="mt-4">Treść:</h4>
+            <hr />
 
-        <div class="dropdown mb-3">
-            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Dodaj treść
-            </button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item add-content" href="#" data-type="desc">Tytuł + Opis</a></li>
-                <li><a class="dropdown-item add-content" href="#" data-type="list">Tytuł + Lista rzeczy</a></li>
-            </ul>
-        </div>
+            <!-- Dynamiczne formularze dla treści -->
+            <div id="contentFields" class="d-flex flex-column gap-3">
+                <!-- Dynamiczne sekcje treści pojawią się tutaj -->
+            </div>
 
-        <div class="form-group">
-            <input type="submit" value="Utwórz" class="btn btn-success" />
-        </div>
-    </form>
+            <div class="dropdown mb-3">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Dodaj treść
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item add-content" href="#" data-type="desc">Tytuł + Opis</a></li>
+                    <li><a class="dropdown-item add-content" href="#" data-type="list">Tytuł + Lista rzeczy</a></li>
+                </ul>
+            </div>
 
-</div>
-
-<div>
-    <a asp-action="Index" class="btn btn-success">Powrót do listy</a>
+            <div class="d-flex justify-content-center gap-2 mt-4">
+                <button type="submit" class="btn btn-success px-4">💾 Utwórz stronę</button>
+                <a asp-action="Index" class="btn btn-outline-secondary px-4">← Wróć do listy</a>
+            </div>
+        </form>
+    </div>
 </div>
 
 @section Scripts {
     @await Html.PartialAsync("_DynamicScriptsPartial")
-
 }

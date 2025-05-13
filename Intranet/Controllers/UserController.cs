@@ -5,7 +5,6 @@ using CutItUp.Data.Data.User;
 using System.Text;
 using System.Security.Cryptography;
 using Intranet.Models;
-using System.Diagnostics;
 
 namespace Intranet.Controllers
 {
@@ -22,8 +21,6 @@ namespace Intranet.Controllers
 
         public async Task<IActionResult> Index()
         {
-            Debug.WriteLine("Uruchomiłem sie" );
-            Debug.WriteLine("UserId: " + HttpContext.Session.GetInt32("UserId"));
             return View(await _context.User.Where(u=>u.Position!="Client").ToListAsync());
         }
 

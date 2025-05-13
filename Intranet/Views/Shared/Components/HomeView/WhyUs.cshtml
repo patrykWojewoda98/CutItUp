@@ -1,6 +1,8 @@
 ﻿@model IEnumerable<CutItUp.Data.Data.CMS.MainWebsite.WhyUsSection>
 
-<div>
+<div class="container py-5">
+    <h3 class="form-title mb-4">Zarządzaj powodami sekcji „Dlaczego My”</h3>
+
     <table class="table table-striped">
         <thead>
             <tr>
@@ -8,25 +10,70 @@
                 <th scope="col">Akcje</th>
             </tr>
         </thead>
-        <tbody>
-            @{
-                foreach (var item in Model)
+        <tbody id="reason-list">
+            @foreach (var item in Model)
+            {
+                foreach (var reason in item.Reasons)
                 {
-                    foreach (var reason in item.Reasons)
-                    {
-                        <tr>
-                            <th scope="row">@reason</th>
-                            <th scope="row">
-                                <a asp-action="Edit" asp-route-id="@item" asp-controller="Promo" class="btn btn-primary">Edycja</a>
-                            </th>
-                            <th scope="row">
-                                <a asp-action="Delete" asp-route-id="@item" asp-controller="Promo" class="btn btn-danger">Usuń</a>
-                            </th>
-                        </tr>
-                    }
+                    <tr data-section-id="@item.Id">
+                        <td>
+                            <form method="post" asp-controller="WhyUsSection" asp-action="EditReason" class="d-flex">
+                                <input type="hidden" name="id" value="@item.Id" />
+                                <input type="text" class="form-control me-2" name="reason" value="@reason" />
+                                <button type="submit" class="btn btn-primary">Zapisz</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form method="get" asp-controller="WhyUsSection" asp-action="DeleteReason">
+                                <input type="hidden" name="id" value="@item.Id" />
+                                <input type="hidden" name="reason" value="@reason" />
+                                <button type="submit" class="btn btn-danger">Usuń</button>
+                            </form>
+                        </td>
+                    </tr>
                 }
             }
         </tbody>
-        <a asp-action="Create" asp-controller="WhyUsSection" class="btn btn-primary">Utwórz nowy</a>
     </table>
+
+    <hr />
+
+    <h4 class="mt-4">Dodaj nowe powody</h4>
+
+    <form method="post" asp-controller="WhyUsSection" asp-action="AddReasons">
+        @* Wybierz pierwszy element (lub inny sposób ustalenia ID sekcji) *@
+        <input type="hidden" name="id" value="@Model.FirstOrDefault()?.Id" />
+
+        <div id="inputs" class="mt-3"></div>
+
+        <button type="button" id="add-reason-button" class="btn btn-outline-secondary btn-sm mt-2">Dodaj nowy powód</button>
+        <br />
+        <button type="submit" class="btn btn-success mt-3">Zapisz nowe powody</button>
+    </form>
 </div>
+
+@section Scripts {
+    <script>
+        let add = document.getElementById("add-reason-button");
+        let index = 1;
+
+        add.addEventListener("click", () => {
+            let inputs = document.getElementById("inputs");
+            let input = document.createElement("div");
+            input.className = "d-flex align-items-center mb-2";
+
+            input.innerHTML = `
+                <input type="text" class="form-control me-2" placeholder="Nowy powód" name="NewReasons" />
+                <button type="button" class="btn btn-outline-danger btn-sm close-button">Usuń</button>
+            `;
+
+            inputs.appendChild(input);
+
+            input.querySelector(".close-button").addEventListener("click", () => {
+                input.remove();
+            });
+
+            index++;
+        });
+    </script>
+}
