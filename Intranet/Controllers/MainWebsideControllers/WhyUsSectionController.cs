@@ -24,8 +24,9 @@ namespace Intranet.Controllers.MainWebsideControllers
             return View(await _context.WhyUsSection.ToListAsync());
         }
 
-        // GET: WhyUsSection/EditReason/{reason}/{id}
-        public async Task<IActionResult> EditReason(string reason, int id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditReason(int id, string originalReason, string updatedReason)
         {
             var whyUsSection = await _context.WhyUsSection
                 .FirstOrDefaultAsync(w => w.Id == id);
@@ -35,24 +36,20 @@ namespace Intranet.Controllers.MainWebsideControllers
                 return NotFound();
             }
 
-            // Zamiana Reasons na List<string> aby móc użyć IndexOf
-            List<string> reasonsList = whyUsSection.Reasons.ToList();
+            var reasonsList = whyUsSection.Reasons.ToList();
 
-            var existingReason = reasonsList.FirstOrDefault(r => r == reason);
-            if (existingReason != null)
+            int index = reasonsList.IndexOf(originalReason);
+            if (index != -1 && !string.IsNullOrWhiteSpace(updatedReason))
             {
-                int index = reasonsList.IndexOf(existingReason); // teraz działa, ponieważ mamy List<string>
-                reasonsList[index] = reason;  // Aktualizujemy powód
+                reasonsList[index] = updatedReason;
+                whyUsSection.Reasons = reasonsList;
+                _context.Update(whyUsSection);
+                await _context.SaveChangesAsync();
             }
 
-            // Zaktualizowanie Reasons w obiekcie WhyUsSection
-            whyUsSection.Reasons = reasonsList;
-
-            _context.Update(whyUsSection);
-            await _context.SaveChangesAsync();
-
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "MainWebsite");
         }
+
 
         // POST: WhyUsSection/AddReason
         [HttpPost]
@@ -67,16 +64,16 @@ namespace Intranet.Controllers.MainWebsideControllers
                 return NotFound();
             }
 
-            // Dodanie nowego powodu
             whyUsSection.Reasons.Add(newReason);
 
             _context.Update(whyUsSection);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Index)); // Przekierowanie po dodaniu
+            return RedirectToAction("Index", "MainWebsite");
         }
 
-        // GET: WhyUsSection/DeleteReason/{reason}/{id}
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteReason(string reason, int id)
         {
             var whyUsSection = await _context.WhyUsSection
@@ -87,12 +84,11 @@ namespace Intranet.Controllers.MainWebsideControllers
                 return NotFound();
             }
 
-            // Usuwanie powodu z kolekcji Reasons
             whyUsSection.Reasons.Remove(reason);
             _context.Update(whyUsSection);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Index)); // Przekierowanie po usunięciu
+            return RedirectToAction("Index", "MainWebsite"); 
         }
     }
 }
