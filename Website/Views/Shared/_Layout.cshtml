@@ -19,9 +19,7 @@
 </head>
 @inject CutItUpContext _context
 @{
-    var isLogged = Context.Session.GetString("ClientName") != null;
-    var clientName = Context.Session.GetString("ClientName") ?? "Gość";
-    var avatarUrl = Context.Session.GetString("ProfileImagePath") ?? "~/images/placeholder.png";
+    var tokenInfo = Context.Items["TokenInfo"] as TokenInfo;
 
     var dynamicPages = _context.Website.ToList();
 }
@@ -71,20 +69,21 @@
                     </ul>
                 </div>
                 <div class="profile d-flex align-items-center">
-                    @if (isLogged)
+                    @if (tokenInfo.IsValid)
                     {
                         <a asp-controller="CartTool" asp-action="Index">
                             <i class="bi bi-cart-fill cart-pic"></i>
                         </a>
+                        <h5 class="mb-0 me-2 d-none d-md-block">Witaj @tokenInfo.FirstName @tokenInfo.LastName</h5>
                     }
                     else
                     {
                         <a asp-controller="Client" asp-action="Index">
                             <i class="bi bi-cart-fill cart-pic"></i>
                         </a>
+                        <h5 class="mb-0 me-2 d-none d-md-block">Witaj Gościu!</h5>
                     }
-
-                    <h5 class="mb-0 me-2 d-none d-md-block">Patryk Wojewoda</h5>
+                    
                 </div>
             </div>
         </nav>

@@ -5,16 +5,19 @@ using CutItUp.Data.Data.Client;
 using System.Text;
 using System.Security.Cryptography;
 using Website.Models.ClientRegister;
+using Website.Services;
 
 namespace Website.Controllers
 {
     public class ClientController : Controller
     {
         private readonly CutItUpContext _context;
+        private readonly JwtService _jwtService;
 
-        public ClientController(CutItUpContext context)
+        public ClientController(CutItUpContext context, JwtService jwtService)
         {
             _context = context;
+            _jwtService = jwtService;
         }
 
         // GET: Client
@@ -31,9 +34,7 @@ namespace Website.Controllers
             var client = await _context.Client.FirstOrDefaultAsync(u => u.Login == username && u.PasswordHash == hashedPassword);
             if (client != null)
             {
-                ViewBag.LoginFailed = false;
-                HttpContext.Session.SetString("ClientName", client.FirstName + " " + client.LastName);
-                HttpContext.Session.SetInt32("ClientId", client.Id);
+                HttpContext.Session.SetString("ClientToken", _jwtService.GenerateToken(client));
                 return RedirectToAction("Index", "CartTool");
             }
 

@@ -5,6 +5,7 @@ using CutItUp.Data.Context;
 using CutItUp.Data.Data.Cart;
 using Website.Services.Interfaces;
 using Microsoft.AspNetCore.Cors.Infrastructure;
+using Website.Models;
 
 namespace Website.Controllers
 {
@@ -29,7 +30,9 @@ namespace Website.Controllers
         // GET: CartTool
         public async Task<IActionResult> Index()
         {
-            var clientId = HttpContext.Session.GetInt32("ClientId");
+            var tokenInfo = HttpContext.Items["TokenInfo"] as TokenInfo;
+            var clientId = tokenInfo?.Id;
+            //var clientId = HttpContext.Session.GetInt32("ClientId");
             if (!clientId.HasValue)
             {
                 return RedirectToAction("Index", "Client");
