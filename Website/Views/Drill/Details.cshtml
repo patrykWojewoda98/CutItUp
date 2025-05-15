@@ -1,60 +1,63 @@
 ﻿@model CutItUp.Data.Data.Tools.Drill
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Szczegóły narzędzia";
+    var tokenInfo = Context.Items["TokenInfo"] as TokenInfo;
 }
 
-<h1>Details</h1>
+<head>
+    <link rel="stylesheet" href="~/css/details.css" asp-append-version="true" />
+</head>
 
-<div>
-    <h4>Drill</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Angle)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Angle)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Length)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Length)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Dimension)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Dimension)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Material)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Material)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="container-fluid">
+    <div class="card">
+        <div class="wrapper">
+            <div class="preview">
+                <img src="@Model.ImageUrl" alt="@Model.Name" />
+            </div>
+            <div class="details">
+                <h3 class="product-title">@Model.Name</h3>
+                <p class="product-description">@Model.Description</p>
+                <h4 class="price">Cena: <span>@Model.Price zł</span></h4>
+
+                <dl class="specs">
+                    <dt>Materiał:</dt>
+                    <dd>@Model.Material</dd>
+                    <dt>Długość narzędzia:</dt>
+                    <dd>@Model.Length mm</dd>
+                    <dt>Kąt:</dt>
+                    <dd>@Model.Angle°</dd>
+                    <dt>Wymiar:</dt>
+                    <dd>@Model.Dimension</dd>
+                    <dt>Ilość sztuk w magazynie:</dt>
+                    <dd>@Model.NoOfToolsInMagazine</dd>
+                    <dt>Ilość sprzedanych sztuk:</dt>
+                    <dd>@Model.NoOfSaled</dd>
+                </dl>
+
+                <div class="action">
+                    @{
+                        if (tokenInfo != null && tokenInfo.IsValid)
+                        {
+                            <form asp-controller="CartTool" asp-action="AddToCart" method="post">
+                                <input type="hidden" name="clientID" value=@tokenInfo.Id />
+                                <input type="hidden" name="itemId" value="@Model.Id" />
+                                <input type="number" name="amount" value="1" min="1" max="100" step="1" class="form-control" style="width: 100px; display: inline-block; margin-right: 10px;" />
+                                <button type="submit" class="btn btn-custom">Dodaj do koszyka</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <h4><strong>Aby dodać do koszyka musisz być zalogowany! </strong></h4>
+                            <a asp-controller="Client" asp-action="Index" class="btn btn-primary">Zaloguj sie</a>
+                        }
+                        <div style="margin-top:10px;">
+                        <a asp-action="Index" class="btn btn-outline-secondary">Powrót</a>
+                    </div>
+                    }
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>

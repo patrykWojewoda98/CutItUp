@@ -9,8 +9,7 @@
 </head>
 
 @{
-    var isLoggedIn = Context.Session.GetInt32("ClientId").HasValue;
-    var clientID = Context.Session.GetInt32("ClientId");
+    var tokenInfo = Context.Items["TokenInfo"] as TokenInfo;
 }
 <div class="tool-cards-wrapper">
     @foreach (var item in Model)
@@ -28,13 +27,14 @@
                     <p><strong>Materiał:</strong> @item.Material</p>
                     <p><strong>Wymiar:</strong> @item.Dimension mm</p>
                     <p><strong>Ilość krawędzi tnących:</strong> @item.NoCuttingEddges</p>
+                    <a asp-controller="Mill" asp-action="Details" asp-route-id="@item.Id" class="btn btn-info w-100">Szczegóły</a>
 
                     @{
-                        if (isLoggedIn)
+                        if (tokenInfo != null && tokenInfo.IsValid)
                         {
                             <form asp-controller="CartTool" asp-action="AddToCart" method="post">
                                 <input type="hidden" name="itemId" value="@item.Id" />
-                                <input type="hidden" name="clientID" value="@clientID" />
+                                <input type="hidden" name="clientID" value="@tokenInfo.Id" />
 
                                 <input type="number" name="amount" value="1" min="1" max="100" step="1" />
                                 <button type="submit" class="btn btn-primary mt-2">Dodaj do koszyka</button>

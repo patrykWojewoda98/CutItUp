@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using CutItUp.Data.Context;
 using CutItUp.Data.Data.Cart;
 using Website.Services.Interfaces;
-using Microsoft.AspNetCore.Cors.Infrastructure;
 using Website.Models;
 
 namespace Website.Controllers
