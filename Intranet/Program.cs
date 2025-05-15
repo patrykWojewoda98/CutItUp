@@ -40,9 +40,17 @@ app.UseStaticFiles(new StaticFileOptions
     RequestPath = "/Images"
 });
 
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(builder.Environment.ContentRootPath, "..", "CutItUp.Data")),
+    RequestPath = "/Env"
+});
+
 app.UseRouting();
 
 app.UseAuthorization();
+DotNetEnv.Env.Load("../CutItUp.Data/.env");
 
 app.MapControllerRoute(
     name: "default",

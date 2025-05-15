@@ -14,7 +14,9 @@ builder.Services.AddDbContext<CutItUpContext>(options =>
 builder.Services.AddControllersWithViews();
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromDays(30);
+    options.IdleTimeout = TimeSpan.FromSeconds(10);
+    //zastanwić sie jak to zrobic żeby nas zapamietywało tylko po zaznaczeniu opcji zapamiętaj mnie
+    //options.Cookie.MaxAge = TimeSpan.FromMinutes(3);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
     options.Cookie.Name = ".CutItUp.Session";
@@ -36,6 +38,17 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+app.Use(async (context, next) =>
+{
+    var persistentCookie = context.Request.Cookies["PersistentSession"];
+    if (persistentCookie == "true")
+    {
+        context.Session.SetString("Persistent", "true");
+    }
+
+    await next();
+});
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

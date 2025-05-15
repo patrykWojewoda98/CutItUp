@@ -27,19 +27,59 @@ namespace Website.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(string username, string password)
+        public async Task<IActionResult> Login(string username, string password, bool RememberMe)
         {
             var hashedPassword = HashPassword(password);
 
             var client = await _context.Client.FirstOrDefaultAsync(u => u.Login == username && u.PasswordHash == hashedPassword);
             if (client != null)
             {
-                HttpContext.Session.SetString("ClientToken", _jwtService.GenerateToken(client));
+                //HttpContext.Session.SetString("ClientToken", _jwtService.GenerateToken(client)); tego już nie potrzebujemy gdyż działamy na plikakch cookie
+
+                if (RememberMe)
+                {
+                    Response.Cookies.Append("ClientToken", _jwtService.GenerateToken(client), new CookieOptions
+                    {
+                        MaxAge = TimeSpan.FromDays(30),
+                        HttpOnly = true,
+                        Secure = true,
+                        SameSite = SameSiteMode.None
+                    });
+                }
+                else
+                {
+                    // cookie sesyjne (zniknie po zamknięciu przeglądarki)
+                    Response.Cookies.Append("ClientToken", _jwtService.GenerateToken(client), new CookieOptions
+                    {
+                        Expires = null,
+                        MaxAge = TimeSpan.FromMinutes(30),
+                        HttpOnly = true,
+                        Secure = true,
+                        SameSite = SameSiteMode.None
+                    });
+                }
                 return RedirectToAction("Index", "CartTool");
             }
+            
 
             ViewBag.LoginFailed = true;
             return View("Index");
+        }
+
+        [HttpPost]
+        public IActionResult Logout()
+        {
+            // Usuń ciasteczko z tokenem
+            if (Request.Cookies.ContainsKey("ClientToken"))
+            {
+                Response.Cookies.Delete("ClientToken");
+            }
+
+            // Wyczyść sesję (jeśli coś jeszcze w niej trzymasz)
+            HttpContext.Session.Clear();
+
+            // Przekieruj na stronę logowania
+            return RedirectToAction("Index", "CartTool");
         }
 
         // GET: Client/Details/5

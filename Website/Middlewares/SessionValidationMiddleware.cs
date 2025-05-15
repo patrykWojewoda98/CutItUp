@@ -14,12 +14,13 @@ namespace Website.Middlewares
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
-            var token = context.Session.GetString("ClientToken");
-            var tokenCheck = _jwtService.CheckToken(token);
+            var token = context.Request.Cookies["ClientToken"];
+            var result = _jwtService.CheckToken(token);
 
-            context.Items["TokenInfo"] = tokenCheck.IsValid
-                ? _jwtService.DecodeToken(token)
-                : tokenCheck;
+            if (result.IsValid)
+            {
+                context.Items["TokenInfo"] = _jwtService.DecodeToken(token);
+            }
 
             await next(context);
         }
