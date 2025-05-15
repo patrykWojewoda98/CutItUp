@@ -161,6 +161,25 @@ namespace Website.Controllers
 
             return View(cartTool);
         }
+        [HttpPost, ActionName("RemoveItem")]
+        public async Task<IActionResult> RemoveItem(int? itemId)
+        {
+            if (itemId == null)
+            {
+                return NotFound();
+            }
+
+            await _cartService.RemoveFromCartAsync(itemId.Value);
+
+            return RedirectToAction("Index", "CartTool");
+        }
+
+        [HttpPost, ActionName("UpdateQuantity")]
+        public async Task<IActionResult> UpdateQuantity(int itemId, int quantity)
+        {
+            await _cartService.UpdateQuantityAsync(itemId, quantity);
+            return RedirectToAction("Index");
+        }
 
         // POST: CartTool/Delete/5
         [HttpPost, ActionName("Delete")]
