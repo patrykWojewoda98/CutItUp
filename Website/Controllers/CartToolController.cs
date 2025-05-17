@@ -30,7 +30,7 @@ namespace Website.Controllers
         public async Task<IActionResult> Index()
         {
             var tokenInfo = HttpContext.Items["TokenInfo"] as TokenInfo;
-            var clientId = tokenInfo?.Id;
+            var clientId = tokenInfo?.Client.Id;
             //var clientId = HttpContext.Session.GetInt32("ClientId");
             if (!clientId.HasValue)
             {

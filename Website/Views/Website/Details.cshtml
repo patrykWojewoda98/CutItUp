@@ -1,45 +1,54 @@
 ﻿@model CutItUp.Data.Data.CMS.Website
-
+<head>
+    <link rel="stylesheet" href="~/css/bloksWebsite.css" asp-append-version="true" />
+</head>
 @{
-    ViewData["Title"] = Model.Title;
+    var allBlocks = new List<(string Type, string Title, string Description, List<string>? ListItems, string ImageUrl)>();
+
+    allBlocks.AddRange(Model.TitleDecriptionParts.Select(t => (
+        Type: "Text",
+        Title: t.Title,
+        Description: t.Description,
+        ListItems: (List<string>?)null,
+        ImageUrl: t.ImageUrl
+    )));
+
+    allBlocks.AddRange(Model.ListParts.Select(l => (
+        Type: "List",
+        Title: l.Title,
+        Description: l.Description,
+        ListItems: l.ListContent,
+        ImageUrl: l.ImageUrl
+    )));
+
+    // Możesz posortować np. po Title lub innym kluczu, jeśli chcesz mieć określoną kolejność
 }
 
-<div class="container mt-5">
-    <h1 class="mb-4">@Model.Title</h1>
+@for (int i = 0; i < allBlocks.Count; i++)
+{
+    var block = allBlocks[i];
+    var isEven = i % 2 == 0;
+    var alignmentClass = isEven ? "left-block" : "right-block";
+    <div class="block-container @alignmentClass">
+        <div class="block-image">
+            <img src="@block.ImageUrl" alt="Obrazek" />
+        </div>
+        <div class="block-content">
+            <h2>@block.Title</h2>
 
-    @* Bloki typu Tytuł + Opis *@
-    @foreach (var part in Model.TitleDecriptionParts)
-    {
-        <div class="mb-4">
-            <h3>@part.Title</h3>
-            <p>sdfsdfsdfsdf</p>
-            <h3>@part.Description</h3>
-            @if (!string.IsNullOrEmpty(part.ImageUrl))
+            @if (block.Type == "Text")
             {
-                <img src="@Url.Content(part.ImageUrl)" alt="Obrazek" class="img-fluid" />
+                <p>@block.Description</p>
+            }
+            else if (block.Type == "List")
+            {
+                <ul>
+                    @foreach (var item in block.ListItems!)
+                    {
+                        <li>@item</li>
+                    }
+                </ul>
             }
         </div>
-    }
-
-    @* Bloki typu Tytuł + Lista *@
-    @foreach (var part in Model.ListParts)
-    {
-        <div class="mb-4">
-            <h3>@part.Title</h3>
-            @if (!string.IsNullOrEmpty(part.Description))
-            {
-                <p>@part.Description</p>
-            }
-            <ul>
-                @foreach (var item in part.ListContent)
-                {
-                    <li>@item</li>
-                }
-            </ul>
-            @if (!string.IsNullOrEmpty(part.ImageUrl))
-            {
-                <img src="@Url.Content(part.ImageUrl)" alt="Obrazek" class="img-fluid" />
-            }
-        </div>
-    }
-</div>
+    </div>
+}

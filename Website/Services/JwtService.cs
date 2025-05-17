@@ -1,4 +1,5 @@
-﻿using CutItUp.Data.Data.Client;
+﻿using CutItUp.Data.Context;
+using CutItUp.Data.Data.Client;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -13,13 +14,15 @@ namespace Website.Services
     {
         public readonly string _secretKey;
         private readonly int _expirationDays;
-        public JwtService()
+        public readonly CutItUpContext _context; 
+        public JwtService(CutItUpContext cutItUpContext)
         {
             _secretKey = Environment.GetEnvironmentVariable("JWT_SECRET")
                 ?? throw new Exception("Zmienna środowiskowa JWT_SECRET nie została ustawiona");
             var _expirationDaysString = Environment.GetEnvironmentVariable("JWT_EXPIRATION_DAYS")
                 ?? throw new Exception("Zmienna środowiskowa JWT_EXPIRATION_DAYS nie została ustawiona");
             _expirationDays = int.TryParse(_expirationDaysString, out var expirationDays) ? expirationDays : 7;
+            _context = cutItUpContext;
         }
         public string GenerateToken(Client client)
         {
@@ -140,11 +143,20 @@ namespace Website.Services
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var decodedToken = tokenHandler.ReadJwtToken(token);
+
+            var idClaim = decodedToken.Claims.FirstOrDefault(c => c.Type == "id")?.Value;
+            int? id = null;
+
+            if (int.TryParse(idClaim, out var parsedId))
+            {
+                id = parsedId;
+            }
+
+            var client = _context.Client.FirstOrDefault(c => c.Id == id);
+
             return new TokenInfo
             {
-                Id = int.TryParse(decodedToken.Claims.FirstOrDefault(c => c.Type == "id")?.Value, out var id) ? id : (int?)null,
-                FirstName = decodedToken.Claims.FirstOrDefault(c => c.Type == "firstName")?.Value,
-                LastName = decodedToken.Claims.FirstOrDefault(c => c.Type == "lastName")?.Value,
+                Client = client,
                 IsValid = true,
                 Message = "Token is valid"
             };

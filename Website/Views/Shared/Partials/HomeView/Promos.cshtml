@@ -7,6 +7,9 @@
                 <h4 id="subTitle">Gwintowniki Yamawa to synonim niezawodności i najwyższej jakości w obróbce gwintów. Japońska precyzja, trwałość narzędzi oraz szeroka gama modeli sprawiają, że Yamawa od lat cieszy się zaufaniem specjalistów na całym świecie. Niezależnie od tego, czy potrzebujesz gwintowania ręcznego, maszynowego czy bezwiórowego – Yamawa dostarcza rozwiązania dopasowane do najbardziej wymagających zastosowań.'</h4>
             </div>
             <div class="nav-buttons">
+                @{
+                    var counter = 1;
+                }
                 @foreach (var item in Model)
                 {
                     <input type="radio"
@@ -18,7 +21,8 @@
                            data-title="@item.Title"
                            data-description="@item.Description"
                            data-imageurl="@item.PromoFileURL" />
-                    <label class="btn" for="view-option-@item.Id">@item.Id</label>
+                    <label class="btn" for="view-option-@item.Id">@counter</label>
+                    counter++;
                 }
             </div>
         </div>

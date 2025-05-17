@@ -1,13 +1,14 @@
-﻿﻿.navbar {
-    height: 10vh;
+﻿.navbar {
     background-color: var(--primary-color);
+    height: 10vh;
 }
 
 .navbar-toggler {
+    background-color: #343a40;
     border: 2px solid #fff;
     border-radius: 5px;
     padding: 0.5rem;
-    box-shadow: 0 2px 6px var(--shadow-color);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
 
 .navbar-toggler-icon {
@@ -15,7 +16,8 @@
 }
 
 .navbar-toggler:hover {
-    background-color: var(--primary-hover-color);
+    background-color: #495057;
+    border-color: #ccc;
 }
 
 
@@ -47,3 +49,15 @@
         transform: scale(1.2);
         box-shadow: 0 6px 18px var(--shadow-color);
     }
+
+.profile {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    transform: translateY(-10%);
+    gap: 10px;
+    padding: 10px;
+}
+body {
+    padding-top: 10vh;
+}

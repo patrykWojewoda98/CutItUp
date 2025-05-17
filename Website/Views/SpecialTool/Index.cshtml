@@ -44,7 +44,7 @@
                         {
                             <form asp-controller="CartTool" asp-action="AddToCart" method="post">
                                 <input type="hidden" name="itemId" value="@item.Id" />
-                                <input type="hidden" name="clientID" value="@tokenInfo.Id" />
+                                <input type="hidden" name="clientID" value="@tokenInfo.Client.Id" />
 
                                 <input type="number" name="amount" value="1" min="1" max="100" step="1" />
                                 <button type="submit" class="btn btn-primary mt-2">Dodaj do koszyka</button>

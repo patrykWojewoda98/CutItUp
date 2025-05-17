@@ -43,7 +43,7 @@
                     @if (tokenInfo != null && tokenInfo.IsValid)
                     {
                         <form asp-controller="CartTool" asp-action="AddToCart" method="post">
-                            <input type="hidden" name="clientID" value="@tokenInfo.Id" />
+                            <input type="hidden" name="clientID" value="@tokenInfo.Client.Id" />
                             <input type="hidden" name="itemId" value="@Model.Id" />
                             <input type="number" name="amount" value="1" min="1" max="100" step="1" class="form-control" style="width: 100px; display: inline-block; margin-right: 10px;" />
                             <button type="submit" class="btn btn-custom">Dodaj do koszyka</button>

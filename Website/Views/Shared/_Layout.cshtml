@@ -1,5 +1,6 @@
 ﻿@using CutItUp.Data.Context
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="pl">
 <head>
     <meta charset="utf-8" />
@@ -25,72 +26,106 @@
 }
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-            <div class="container-fluid">
-                <a class="navbar-brand d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
-                    <img src="~/images/logo.png" class="logo me-2" alt="Logo" />
-                </a>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <nav class="navbar fixed-top">
+            <div class="container-fluid d-flex justify-content-between align-items-center">
+
+                <div class="d-none d-lg-flex align-items-center gap-3">
+                    <a class="navbar-brand d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
+                        <img src="~/images/logo.png" class="logo me-2" alt="Logo" />
+                    </a>
+                    <ul class="navbar-nav flex-row gap-3 mb-0">
                         <li class="nav-item">
-                            <a class="nav-link text-dark nav-btn" asp-area="" asp-controller="Home" asp-action="Index">
-                                Strona Głowna
+                            <a class="nav-link nav-btn" asp-area="" asp-controller="Home" asp-action="Index">
+                                Strona Główna
                             </a>
                         </li>
 
                         @foreach (var page in dynamicPages)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark nav-btn" asp-controller="Website" asp-action="Show" asp-route-id="@(page.Id)">
+                                <a class="nav-link nav-btn" asp-controller="Website" asp-action="Show" asp-route-id="@(page.Id)">
                                     @(page.Title)
                                 </a>
                             </li>
                         }
                         <li class="nav-item">
-                            <a class="nav-link text-dark nav-btn" asp-area="" asp-controller="Drill" asp-action="Index">
+                            <a class="nav-link nav-btn" asp-controller="Drill" asp-action="Index">
                                 Wiertła
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark nav-btn" asp-controller="Mill" asp-action="Index">
+                            <a class="nav-link nav-btn" asp-controller="Mill" asp-action="Index">
                                 Frezy
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark nav-btn" asp-controller="Tap" asp-action="Index">
+                            <a class="nav-link nav-btn" asp-controller="Tap" asp-action="Index">
                                 Gwintowniki
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark nav-btn" asp-controller="SpecialTool" asp-action="Index">
-                                Narzędzia specialne
+                            <a class="nav-link nav-btn" asp-controller="SpecialTool" asp-action="Index">
+                                Narzędzia specjalne
                             </a>
                         </li>
                     </ul>
                 </div>
-                <div class="profile d-flex align-items-center">
-                    @if (tokenInfo != null && tokenInfo.IsValid)
-                    {
-                        <a asp-controller="CartTool" asp-action="Index">
-                            <i class="bi bi-cart-fill cart-pic"></i>
-                        </a>
-                        <h5 class="mb-0 me-2 d-none d-md-block">Witaj @tokenInfo.FirstName @tokenInfo.LastName</h5>
-                        <form asp-controller="Client" asp-action="Logout" method="post" class="d-inline">
-                            <button type="submit" class="btn btn-sm btn-outline-danger logout-button-style">Wyloguj</button>
-                        </form>
-                    }
-                    else
-                    {
-                        <a asp-controller="Client" asp-action="Index">
-                            <i class="bi bi-cart-fill cart-pic"></i>
-                        </a>
-                        <h5 class="mb-0 me-2 d-none d-md-block">Witaj Gościu!</h5>
-                    }
-                    
-                </div>
+
+
+                @if(tokenInfo != null)
+                {
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="profile">
+                            <a asp-controller="CartTool" asp-action="Index">
+                                <i class="bi bi-cart-fill cart-pic"></i>
+                            </a>
+                            <h5 class="mb-0 me-2 d-none d-md-block">
+                                Witaj ponownie @tokenInfo.Client.FirstName @tokenInfo.Client.LastName
+                            </h5>
+                        </div>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"
+                        aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </div>
+
+                    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                        <div class="offcanvas-header">
+                            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Witaj @tokenInfo.Client.FirstName!</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark nav-btn" asp-area="" asp-controller="Client" asp-action="Details" asp-route-userId="@tokenInfo.Client.Id">
+                                        <i class="bi bi-person-circle"> Profil</i>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-action="EditAccount" asp-route-userId="@tokenInfo.Client.Id" asp-controller="Client" class="nav-link text-dark nav-btn">
+                                        <i class="bi bi-gear-fill"> Ustawienia</i>
+                                    </a>
+                                </li>
+                            </ul>
+                            <form asp-controller="Client" asp-action="Logout" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-outline-danger logout-button-style">Wyloguj</button>
+                            </form>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <h5 class="mb-0 me-2 d-none d-md-block">Witaj Gościu!</h5>
+                }
+
+
             </div>
         </nav>
     </header>
+
+
+
 
     <main role="main" class="px-0">
         @RenderBody()
