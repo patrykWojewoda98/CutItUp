@@ -21,7 +21,6 @@
         ImageUrl: l.ImageUrl
     )));
 
-    // Możesz posortować np. po Title lub innym kluczu, jeśli chcesz mieć określoną kolejność
 }
 
 @for (int i = 0; i < allBlocks.Count; i++)
@@ -30,9 +29,12 @@
     var isEven = i % 2 == 0;
     var alignmentClass = isEven ? "left-block" : "right-block";
     <div class="block-container @alignmentClass">
-        <div class="block-image">
-            <img src="@block.ImageUrl" alt="Obrazek" />
-        </div>
+        @if (!string.IsNullOrWhiteSpace(block.ImageUrl))
+        {
+            <div class="block-image">
+                <img src="@block.ImageUrl"/>
+            </div>
+        }
         <div class="block-content">
             <h2>@block.Title</h2>
 

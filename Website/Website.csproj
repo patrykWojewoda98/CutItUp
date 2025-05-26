@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CutItUp.Data\CutItUp.Data.csproj" />
+    <ProjectReference Include="..\EmailService\EmailService.csproj" />
   </ItemGroup>
 
 </Project>

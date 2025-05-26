@@ -1,4 +1,5 @@
 ﻿using CutItUp.Data.Context;
+using EmailService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
@@ -10,13 +11,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<CutItUpContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DbContext") ?? throw new InvalidOperationException("Connection string 'DbContext' not found.")));
 
+// 1. Dodaj konfigurację EmailConfiguration jako singleton
+var emailConfig = builder.Configuration
+    .GetSection("EmailConfiguration")
+    .Get<EmailConfiguration>();
+
+builder.Services.AddSingleton(emailConfig);
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromSeconds(10);
-    //zastanwić sie jak to zrobic żeby nas zapamietywało tylko po zaznaczeniu opcji zapamiętaj mnie
-    //options.Cookie.MaxAge = TimeSpan.FromMinutes(3);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
     options.Cookie.Name = ".CutItUp.Session";
@@ -25,7 +31,8 @@ builder.Services.AddSession(options =>
 });
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<JwtService>();
-builder.Services.AddScoped<SessionValidationMiddleware>();//dopiero tutaj!!!!
+builder.Services.AddScoped<SessionValidationMiddleware>();
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 var app = builder.Build();
 app.UseSession();

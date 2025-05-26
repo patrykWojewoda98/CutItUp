@@ -71,16 +71,16 @@
     margin-right: 5px;
 }
 
-.login-page .login_btn {
-    color: black;
-    background-color: #FFC312;
-    width: 100px;
+.login_btn {
+    color: black !important;
+    background-color: #FFC312 !important;
+    width: 100% !important;
 }
 
-.login-page .login_btn:hover {
-    color: black;
-    background-color: white;
-}
+    .login_btn:hover {
+        color: black !important;
+        background-color: white !important;
+    }
 
 .login-page .links {
     color: white;

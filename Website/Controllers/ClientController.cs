@@ -6,6 +6,8 @@ using System.Text;
 using System.Security.Cryptography;
 using Website.Models.ClientRegister;
 using Website.Services;
+using Website.Models;
+using EmailService;
 
 namespace Website.Controllers
 {
@@ -13,11 +15,13 @@ namespace Website.Controllers
     {
         private readonly CutItUpContext _context;
         private readonly JwtService _jwtService;
+        private readonly IEmailSender _emailSender;
 
-        public ClientController(CutItUpContext context, JwtService jwtService)
+        public ClientController(CutItUpContext context, JwtService jwtService, IEmailSender emailSender)
         {
             _context = context;
             _jwtService = jwtService;
+            _emailSender = emailSender;
         }
 
         // GET: Client
@@ -83,21 +87,21 @@ namespace Website.Controllers
         }
 
         // GET: Client/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? clientId)
         {
-            if (id == null)
+            if (clientId == null)
             {
                 return NotFound();
             }
 
             var client = await _context.Client
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Id == clientId);
             if (client == null)
             {
                 return NotFound();
             }
 
-            return View(client);
+            return View("Details",client);
         }
 
         // GET: Client/Create
@@ -131,6 +135,11 @@ namespace Website.Controllers
 
                 _context.Client.Add(client);
                 await _context.SaveChangesAsync();
+
+                // Wysyłanie e-maila powitalnego
+                var message = new Message(new string[] { model.Email }, "Witamy w CutItUp!", $"Cześć {model.FirstName},\n\nDziękujemy za rejestrację w CutItUp! Twoje konto zostało pomyślnie utworzone.\n\nPozdrawiamy,\nZespół CutItUp");
+                await _emailSender.SendEmailAsync(message);
+
                 return RedirectToAction("Index");
             }
 
@@ -139,19 +148,32 @@ namespace Website.Controllers
 
 
         // GET: Client/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? clientId)
         {
-            if (id == null)
+            if (clientId == null)
             {
                 return NotFound();
             }
 
-            var client = await _context.Client.FindAsync(id);
+            var client = await _context.Client.FindAsync(clientId);
+            var clientViewModel = new ClientViewModel
+            {
+                Id = client.Id,
+                Login = client.Login,
+                FirstName = client.FirstName,
+                LastName = client.LastName,
+                Email = client.Email,
+                PhoneNumber = client.PhoneNumber,
+                Address = client.Address,
+                City = client.City,
+                PostalCode = client.PostalCode,
+                Country = client.Country
+            };
             if (client == null)
             {
                 return NotFound();
             }
-            return View(client);
+            return View(clientViewModel);
         }
 
         // POST: Client/Edit/5
@@ -159,9 +181,11 @@ namespace Website.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,PasswordHash,Login,FirstName,LastName,Email,PhoneNumber,Address,City,PostalCode,Country")] Client client)
+        public async Task<IActionResult> Edit(int id, ClientViewModel clientVm)
         {
-            if (id != client.Id)
+            var clientEntity = await _context.Client.FindAsync(id);
+
+            if (clientEntity == null)
             {
                 return NotFound();
             }
@@ -170,12 +194,23 @@ namespace Website.Controllers
             {
                 try
                 {
-                    _context.Update(client);
+                    clientEntity.Login = clientVm.Login;
+                    clientEntity.PasswordHash = HashPassword(clientVm.Password);
+                    clientEntity.FirstName = clientVm.FirstName;
+                    clientEntity.LastName = clientVm.LastName;
+                    clientEntity.Email = clientVm.Email;
+                    clientEntity.PhoneNumber = clientVm.PhoneNumber;
+                    clientEntity.Address = clientVm.Address;
+                    clientEntity.City = clientVm.City;
+                    clientEntity.PostalCode = clientVm.PostalCode;
+                    clientEntity.Country = clientVm.Country;
+
+                    _context.Update(clientEntity);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ClientExists(client.Id))
+                    if (!ClientExists(clientVm.Id))
                     {
                         return NotFound();
                     }
@@ -184,9 +219,10 @@ namespace Website.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return View("Details", clientEntity);
             }
-            return View(client);
+
+            return View(clientVm);
         }
 
         // GET: Client/Delete/5

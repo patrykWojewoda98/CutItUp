@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Intranet", "Intranet\Intran
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CutItUp.Data", "CutItUp.Data\CutItUp.Data.csproj", "{AA61EA90-AB65-4F88-AFB1-B8A81A18830E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailService", "EmailService\EmailService.csproj", "{C22775D7-09EF-40B5-BFFE-3D687878240F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{AA61EA90-AB65-4F88-AFB1-B8A81A18830E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA61EA90-AB65-4F88-AFB1-B8A81A18830E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA61EA90-AB65-4F88-AFB1-B8A81A18830E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C22775D7-09EF-40B5-BFFE-3D687878240F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C22775D7-09EF-40B5-BFFE-3D687878240F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C22775D7-09EF-40B5-BFFE-3D687878240F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C22775D7-09EF-40B5-BFFE-3D687878240F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

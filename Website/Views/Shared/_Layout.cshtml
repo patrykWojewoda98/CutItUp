@@ -98,12 +98,12 @@
                         <div class="offcanvas-body">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark nav-btn" asp-area="" asp-controller="Client" asp-action="Details" asp-route-userId="@tokenInfo.Client.Id">
+                                    <a class="nav-link text-dark nav-btn" asp-area="" asp-controller="Client" asp-action="Details" asp-route-clientId="@tokenInfo.Client.Id">
                                         <i class="bi bi-person-circle"> Profil</i>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a asp-action="EditAccount" asp-route-userId="@tokenInfo.Client.Id" asp-controller="Client" class="nav-link text-dark nav-btn">
+                                    <a asp-action="Edit" asp-route-clientId="@tokenInfo.Client.Id" asp-controller="Client" class="nav-link text-dark nav-btn">
                                         <i class="bi bi-gear-fill"> Ustawienia</i>
                                     </a>
                                 </li>
@@ -117,6 +117,10 @@
                 else
                 {
                     <h5 class="mb-0 me-2 d-none d-md-block">Witaj Gościu!</h5>
+                    <div class="d-flex align-items-center gap-3">
+                        <a asp-controller="Client" asp-action="Index" class="login_btn btn">Zaloguj</a>
+                        <a asp-controller="Client" asp-action="Create" class="login_btn btn">Zarejestruj</a>
+                    </div>
                 }
 
 

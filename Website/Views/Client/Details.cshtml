@@ -1,0 +1,64 @@
+﻿@model CutItUp.Data.Data.Client.Client
+
+@{
+    ViewData["Title"] = "Szczegóły konta";
+}
+
+<div class="container py-5 d-flex justify-content-center">
+    <div class="details-wrapper card p-4" style="max-width: 600px; border-radius: 10px;">
+        <h3 class="text-center mb-4 fw-bold">Szczegóły konta</h3>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <strong>Imię:</strong>
+                <p>@Model.FirstName</p>
+            </div>
+            <div class="col-md-6">
+                <strong>Nazwisko:</strong>
+                <p>@Model.LastName</p>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <strong>Login:</strong>
+                <p>@Model.Login</p>
+            </div>
+            <div class="col-md-6">
+                <strong>E-mail:</strong>
+                <p>@Model.Email</p>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <strong>Telefon:</strong>
+                <p>@Model.PhoneNumber</p>
+            </div>
+            <div class="col-md-6">
+                <strong>Kraj:</strong>
+                <p>@Model.Country</p>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <strong>Miasto:</strong>
+                <p>@Model.City</p>
+            </div>
+            <div class="col-md-6">
+                <strong>Kod pocztowy:</strong>
+                <p>@Model.PostalCode</p>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <strong>Adres:</strong>
+            <p>@Model.Address</p>
+        </div>
+
+        <div class="d-flex justify-content-center gap-2 mt-4">
+            <a asp-action="Edit" asp-route-clientId="@Model.Id" class="btn btn-warning">Edytuj dane</a>
+        </div>
+    </div>
+</div>
