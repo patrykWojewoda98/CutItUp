@@ -1,5 +1,6 @@
 ﻿using CutItUp.Data.Context;
 using CutItUp.Data.Data.Client;
+using CutItUp.Data.Data.User;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -50,6 +51,53 @@ namespace Website.Services
 
             return tokenHandler.WriteToken(token);
         }
+
+        public string GenerateResetToken(Client client)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim("id", client.Id.ToString()),
+            };
+            var tokenDecriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.UtcNow.AddHours(1), // Reset token valid for 1 hour
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_secretKey)), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var token = tokenHandler.CreateToken(tokenDecriptor);
+            return tokenHandler.WriteToken(token);
+        }
+
+        public bool ValidateResetToken(string token, Client client)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var validationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_secretKey)),
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero
+            };
+            try
+            {
+                tokenHandler.ValidateToken(token, validationParameters, out SecurityToken validatedToken);
+                var jwtToken = (JwtSecurityToken)validatedToken;
+                var idClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == "id")?.Value;
+                if (int.TryParse(idClaim, out var clientId) && clientId == client.Id)
+                {
+                    return true;
+                }
+            }
+            catch
+            {
+                // Token validation failed
+            }
+            return false;
+        }
+
 
         public TokenInfo CheckToken(string token)
         {

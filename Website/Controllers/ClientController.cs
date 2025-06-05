@@ -8,6 +8,7 @@ using Website.Models.ClientRegister;
 using Website.Services;
 using Website.Models;
 using EmailService;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace Website.Controllers
 {
@@ -110,6 +111,11 @@ namespace Website.Controllers
             return View();
         }
 
+        public IActionResult ForgotPassword()
+        {
+            return View("ForgotPasswordScrean");
+        }
+
         // POST: Client/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -140,12 +146,76 @@ namespace Website.Controllers
                 var message = new Message(new string[] { model.Email }, "Witamy w CutItUp!", $"Cześć {model.FirstName},\n\nDziękujemy za rejestrację w CutItUp! Twoje konto zostało pomyślnie utworzone.\n\nPozdrawiamy,\nZespół CutItUp");
                 await _emailSender.SendEmailAsync(message);
 
-                return RedirectToAction("Index");
+                return View(model);
             }
 
             return View(model);
         }
+        //TODO: dorobić wysyłanie e-maila z resetem hasła
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ForgotPassword(string email)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var user = await _context.Client
+                .FirstOrDefaultAsync(u => u.Email == email);
+            if (user == null)
+            {
+                return BadRequest("Invalid Request");
+            }
+            var resetToken = _jwtService.GenerateResetToken(user);
+            var param = new Dictionary<string, string?>
+            {
+                { "token", resetToken },
+                { "email", email }
+            };
 
+            var callbackUrl = QueryHelpers.AddQueryString("https://localhost:7099/Client/ChangePassword", param);
+            var message = new Message(new string[] { email! }, "Resetowanie hasła", $"Cześć {user.FirstName},\n\nKliknij w poniższy link, aby zresetować swoje hasło:\n{callbackUrl}\n\nJeśli nie prosiłeś o reset hasła, zignoruj tę wiadomość.\n\nPozdrawiamy,\nZespół CutItUp");
+
+            await _emailSender.SendEmailAsync(message);
+            return RedirectToAction("Index", "CartTool");
+        }
+
+        // GET: Client/ChangePassword
+        [HttpGet]
+        public IActionResult ChangePassword(string token, string email)
+        {
+            var model = new ChangePasswordViewModel { Token = token, Email = email };
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var user = await _context.Client.FirstOrDefaultAsync(u => u.Email == model.Email);
+            if (user == null)
+            {
+                ModelState.AddModelError("", "Nie znaleziono użytkownika.");
+                return View(model);
+            }
+
+            // tu możesz opcjonalnie zweryfikować token JWT, jeśli zawiera np. Email
+            if (!_jwtService.ValidateResetToken(model.Token, user)) // stwórz tę metodę w JwtService
+            {
+                ModelState.AddModelError("", "Token jest nieprawidłowy lub wygasł.");
+                return View(model);
+            }
+
+            user.PasswordHash = HashPassword(model.NewPassword);
+            _context.Update(user);
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = "Hasło zostało zmienione.";
+            return RedirectToAction("Index", "Client");
+        }
 
         // GET: Client/Edit/5
         public async Task<IActionResult> Edit(int? clientId)
